@@ -19,7 +19,7 @@ CREATE TABLE salas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     bloco VARCHAR(20) NOT NULL,
-    tipo VARCHAR(30) NOT NULL -- Ex: 'Teórica' ou 'Prática'
+    tipo VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE disciplinas (
@@ -57,13 +57,10 @@ INSERT INTO disciplinas (nome) VALUES
 ('Desenvolvimento Web Java'),
 ('Banco de Dados Relacional');
 
--- Vinculando Alocações (Exemplo de onde cada um deve estar)
 INSERT INTO alocacoes (usuario_id, disciplina_id, sala_id, horario, dia_semana) VALUES 
--- Aluno 1 (Carlos) assistindo aula na Sala 101
+
 (1, 1, 1, '19:00 - 22:30', 'Segunda-feira'),
 
--- Professor 3 (Roberto) dando aula teórica na Sala 101
 (3, 1, 1, '19:00 - 22:30', 'Segunda-feira'),
 
--- Professor 4 (Ana) dando aula prática no Laboratório 03
 (4, 2, 2, '19:00 - 22:30', 'Terça-feira');
