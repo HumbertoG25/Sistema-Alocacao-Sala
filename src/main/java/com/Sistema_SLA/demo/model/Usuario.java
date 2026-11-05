@@ -6,6 +6,7 @@ public class Usuario {
     private String email;
     private String senha;
     private Long perfilId;
+    private String perfil;
 
     public Usuario() {
     }
@@ -51,5 +52,12 @@ public class Usuario {
     }
     public Long getPerfilId() {
         return perfilId;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
+    public String getPerfil() {
+        return perfil;
     }
 }

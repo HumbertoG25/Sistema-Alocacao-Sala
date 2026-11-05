@@ -1,74 +1,99 @@
 # Sistema de Localização Acadêmica (SLA)
 
-Projeto final desenvolvido para a disciplina do 2º Bimestre do **UNICEPLAC - Centro Universitário do Planalto Central Apparecido dos Santos**.
+Aplicação web acadêmica para alunos e professores consultarem a disciplina, o horário, o bloco e a sala de suas aulas.
 
-## 📌 Sobre o Projeto
+## Tecnologias
 
-O **Sistema de Localização Acadêmica (SLA)** é uma aplicação web baseada no padrão **MVC (Model-View-Controller)** que simula um portal acadêmico para direcionamento de alunos e professores dentro do campus.
+- Java 17+
+- Spring Boot 4.1
+- Jakarta Faces (JSF) com JoinFaces
+- Spring JDBC com `JdbcTemplate`
+- MySQL
+- Maven
 
-* **Perfil Aluno:** Exibe o painel informando o nome da disciplina do dia, horário e o bloco/sala exatos para comparecimento.
-* **Perfil Professor:** Exibe o painel detalhado de alocações, diferenciando salas para aulas teóricas e laboratórios para aulas práticas.
+## Funcionalidades
 
-## 🛠️ Tecnologias Utilizadas
+- Login com e-mail e senha
+- Identificação do perfil do usuário
+- Redirecionamento para o painel de aluno ou professor
+- Controle de sessão e logout
+- Consulta de todas as alocações do usuário
+- Destaque automático das aulas do dia no painel do aluno
+- Mensagens amigáveis quando o banco de dados estiver indisponível
+- Painel responsivo para celular e computador
 
-* **Java 17+**
-* **Spring Boot** (Injeção de Dependências e motor principal)
-* **JSF (JavaServer Faces) / JoinFaces** (Camada de Visão `.xhtml`)
-* **JDBC (Spring JdbcTemplate)** (Persistência nativa via SQL, sem ORM/Hibernate)
-* **MySQL / PostgreSQL** (Banco de Dados Relacional)
-
-## 📁 Estrutura de Arquivos e Pacotes
+## Estrutura principal
 
 ```text
-sistema-sla/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/
-│   │   │       └── sistema/
-│   │   │           └── sla/
-│   │   │               ├── SlaApplication.java        # Classe principal do Spring Boot
-│   │   │               ├── controller/                # Managed Beans do JSF (Ponte View-Controller)
-│   │   │               │   ├── LoginBean.java
-│   │   │               │   ├── AlunoBean.java
-│   │   │               │   └── ProfessorBean.java
-│   │   │               ├── dao/                       # Camada de Persistência JDBC (Padrão DAO)
-│   │   │               │   ├── UsuarioDao.java
-│   │   │               │   └── AlocacaoDao.java
-│   │   │               ├── model/                     # Entidades / DTOs do sistema
-│   │   │               │   ├── Usuario.java
-│   │   │               │   ├── Sala.java
-│   │   │               │   ├── Disciplina.java
-│   │   │               │   └── Alocacao.java
-│   │   │               └── service/                   # Regras de negócio
-│   │   │                   └── AutenticacaoService.java
-│   │   └── resources/
-│   │       ├── application.properties                 # Configurações do banco de dados e conexões
-│   │       └── schema.sql (opcional)                  # Script SQL auxiliar de inicialização
-│   └── webapp/
-│       ├── login.xhtml                                # Tela de login
-│       ├── aluno/
-│       │   └── painel-aluno.xhtml                     # Painel visual do aluno
-│       └── professor/
-│           └── painel-professor.xhtml                 # Painel visual do professor
-├── bkp_banco.sql                                      # Script SQL principal exigido na entrega
-├── pom.xml                                            # Dependências (Spring Boot, JDBC, JoinFaces/JSF)
-└── README.md                                          # Documentação do projeto para o GitHub
+src/main/java/com/Sistema_SLA/demo/
+├── controller/   Beans utilizados pelas páginas XHTML
+├── dao/          Consultas SQL com JdbcTemplate
+├── model/        Modelos e dados exibidos nas telas
+└── service/      Regras de autenticação e alocação
+
+src/main/resources/
+├── META-INF/resources/   Páginas XHTML e CSS
+└── application.properties
 ```
 
-## 🚀 Como Executar o Projeto
+## Configuração do banco
 
-1. **Configurar o Banco de Dados:**
-   * Execute o script `bkp_banco.sql` no seu SGBD para criar as tabelas e popular os dados iniciais.
-   * Atualize as credenciais no arquivo `src/main/resources/application.properties`.
+1. Instale e inicie o MySQL.
+2. Execute o arquivo `bkp_script-banco.sql` no MySQL Workbench ou em outro cliente.
+3. Configure as credenciais do banco.
 
-2. **Rodar a Aplicação:**
-   * Execute a classe principal `SlaApplication.java` ou utilize o Maven:
-     ```bash
-     mvn spring-boot:run
-     ```
-   * Acesse no navegador: `http://localhost:8080/login.xhtml`
+O projeto usa estas variáveis de ambiente:
 
----
-*Projeto acadêmico desenvolvido em grupo.*
-*Incompleto, Por enquanto*
+| Variável | Valor padrão |
+|---|---|
+| `DB_URL` | `jdbc:mysql://localhost:3306/sistemasla` |
+| `DB_USERNAME` | `root` |
+| `DB_PASSWORD` | vazio |
+
+No PowerShell, as variáveis podem ser definidas antes de iniciar a aplicação:
+
+```powershell
+$env:DB_USERNAME="root"
+$env:DB_PASSWORD="sua_senha"
+```
+
+Também é possível alterar os valores diretamente em `src/main/resources/application.properties`, mas não é recomendado salvar uma senha real no repositório.
+
+## Executando
+
+No Windows:
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+Em Linux ou macOS:
+
+```bash
+./mvnw spring-boot:run
+```
+
+Depois, abra:
+
+```text
+http://localhost:8080/
+```
+
+## Usuários de demonstração
+
+Os usuários são criados pelo script SQL.
+
+| Perfil | E-mail | Senha |
+|---|---|---|
+| Aluno | `carlos@uniceplac.edu.br` | `123456` |
+| Aluno | `mariana@uniceplac.edu.br` | `123456` |
+| Professor | `roberto@uniceplac.edu.br` | `123456` |
+| Professor | `ana@uniceplac.edu.br` | `123456` |
+
+## Testes
+
+```powershell
+.\mvnw.cmd test
+```
+
+As senhas do script são simples apenas para demonstração acadêmica. Em um ambiente real, elas devem ser armazenadas com hash seguro.

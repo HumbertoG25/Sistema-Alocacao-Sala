@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<f:metadata>
+    <f:viewAction action="#{alunoBean.carregar}" onPostback="false"/>
+</f:metadata>
+<h:head>
+    <title>Minhas aulas | Sistema SLA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="estilo.css"/>
+</h:head>
+<h:body styleClass="pagina-painel">
+    <header class="topo">
+        <div class="container topo-conteudo">
+            <div class="marca">
+                <span class="marca-simbolo">SLA</span>
+                <span class="marca-nome">Localização Acadêmica</span>
+            </div>
+            <h:form>
+                <div class="usuario-topo">
+                    <div class="usuario-texto">
+                        <strong>#{loginBean.usuarioLogado.nome}</strong>
+                        <span>Aluno</span>
+                    </div>
+                    <span class="avatar">#{loginBean.usuarioLogado.nome.substring(0, 1)}</span>
+                    <h:commandButton value="Sair" action="#{loginBean.sair}" styleClass="botao-sair"/>
+                </div>
+            </h:form>
+        </div>
+    </header>
+
+    <main class="container conteudo-painel">
+        <h:messages globalOnly="true" styleClass="mensagem-erro mensagem-painel"/>
+
+        <section class="boas-vindas">
+            <div>
+                <span class="etiqueta etiqueta-verde">Painel do aluno</span>
+                <h1>Olá, #{loginBean.usuarioLogado.nome.split(' ')[0]}!</h1>
+                <p>Confira onde serão suas próximas aulas.</p>
+            </div>
+            <div class="resumo">
+                <strong>#{alunoBean.alocacoes.size()}</strong>
+                <span>#{alunoBean.alocacoes.size() == 1 ? 'aula na semana' : 'aulas na semana'}</span>
+            </div>
+        </section>
+
+        <h:panelGroup layout="block" styleClass="estado-vazio" rendered="#{not alunoBean.erroCarregamento and alunoBean.semAlocacoes}">
+            <span class="estado-icone">○</span>
+            <h2>Nenhuma aula encontrada</h2>
+            <p>Não há uma sala vinculada ao seu usuário neste momento.</p>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="secao-aulas" rendered="#{not alunoBean.erroCarregamento and not alunoBean.semAlocacoes}">
+            <div class="titulo-secao">
+                <div>
+                    <span class="titulo-indicador"></span>
+                    <h2>Aulas de hoje</h2>
+                </div>
+                <span>#{alunoBean.aulasDeHoje.size()} encontrada(s)</span>
+            </div>
+
+            <h:panelGroup layout="block" styleClass="aviso-dia" rendered="#{alunoBean.semAulasHoje}">
+                <strong>Você não tem aulas alocadas para hoje.</strong>
+                <span>Consulte abaixo a sua agenda completa da semana.</span>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="grade-alocacoes" rendered="#{not alunoBean.semAulasHoje}">
+                <ui:repeat value="#{alunoBean.aulasDeHoje}" var="aula">
+                    <article class="cartao-aula cartao-hoje">
+                        <div class="cartao-dia">
+                            <span>Hoje</span>
+                            <strong>#{aula.diaSemana}</strong>
+                        </div>
+                        <div class="cartao-corpo">
+                            <span class="tipo-aula">#{aula.tipoSala}</span>
+                            <h2>#{aula.disciplina}</h2>
+                            <dl class="detalhes-aula">
+                                <div><dt>Horário</dt><dd>#{aula.horario}</dd></div>
+                                <div><dt>Local</dt><dd>#{aula.sala}</dd></div>
+                                <div><dt>Bloco</dt><dd>#{aula.bloco}</dd></div>
+                            </dl>
+                        </div>
+                    </article>
+                </ui:repeat>
+            </h:panelGroup>
+
+            <div class="titulo-secao titulo-agenda">
+                <div>
+                    <span class="titulo-indicador"></span>
+                    <h2>Agenda da semana</h2>
+                </div>
+                <span>Todos os horários</span>
+            </div>
+
+            <div class="grade-alocacoes">
+            <ui:repeat value="#{alunoBean.alocacoes}" var="aula">
+                <article class="cartao-aula">
+                    <div class="cartao-dia">
+                        <span>Dia da semana</span>
+                        <strong>#{aula.diaSemana}</strong>
+                    </div>
+                    <div class="cartao-corpo">
+                        <span class="tipo-aula">#{aula.tipoSala}</span>
+                        <h2>#{aula.disciplina}</h2>
+                        <dl class="detalhes-aula">
+                            <div><dt>Horário</dt><dd>#{aula.horario}</dd></div>
+                            <div><dt>Local</dt><dd>#{aula.sala}</dd></div>
+                            <div><dt>Bloco</dt><dd>#{aula.bloco}</dd></div>
+                        </dl>
+                    </div>
+                </article>
+            </ui:repeat>
+            </div>
+        </h:panelGroup>
+    </main>
+</h:body>
+</html>

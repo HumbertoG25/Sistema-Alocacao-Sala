@@ -1,40 +1,49 @@
 package com.Sistema_SLA.demo.dao;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.Sistema_SLA.demo.model.AlocacaoDetalhe;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-@Repository 
+import java.util.List;
+
+@Repository
 public class AlocacaoDao {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    public Map<String, Object> buscaAlocAluno(Long IdUsuario){
-        String sql = "SELECT d.nome AS disciplina, a.horario, a.dia_semana, s.bloco, s.nome AS sala"+
-                    "FROM alocacoes a "+
-                    "JOIN disciplinas d ON a.disciplina_id = d.id "+
-                    "JOIN salas s ON a.sala_id = s.id "+
-                    "WHERE a.usuario_id = ?";
-        try{
-            return jdbcTemplate.queryForMap(sql, IdUsuario);
-        } catch (Exception e){
-            return null;
-        }
+    public AlocacaoDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Map<String, Object> buscaAlocProf(Long IdUsuario){
-        String sql = "SELECT d.nome AS disciplina, a.horario, a.dia_semana, s.bloco, s.nome AS sala, s.tipo AS tipo_sala " +
-             "FROM alocacoes a " +
-             "JOIN disciplinas d ON a.disciplina_id = d.id " +
-             "JOIN salas s ON a.sala_id = s.id " +
-             "WHERE a.usuario_id = ?";
-        try{
-            return jdbcTemplate.queryForMap(sql, IdUsuario);
-        } catch (Exception e){
-            return null;
-        }
+    public List<AlocacaoDetalhe> buscaPorUsuario(Long idUsuario) {
+        String sql = """
+                SELECT a.id, d.nome AS disciplina, a.horario, a.dia_semana,
+                       s.bloco, s.nome AS sala, s.tipo AS tipo_sala
+                FROM alocacoes a
+                JOIN disciplinas d ON d.id = a.disciplina_id
+                JOIN salas s ON s.id = a.sala_id
+                WHERE a.usuario_id = ?
+                ORDER BY CASE a.dia_semana
+                    WHEN 'Segunda-feira' THEN 1
+                    WHEN 'Terça-feira' THEN 2
+                    WHEN 'Quarta-feira' THEN 3
+                    WHEN 'Quinta-feira' THEN 4
+                    WHEN 'Sexta-feira' THEN 5
+                    WHEN 'Sábado' THEN 6
+                    ELSE 7
+                END, a.horario
+                """;
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            AlocacaoDetalhe alocacao = new AlocacaoDetalhe();
+            alocacao.setId(rs.getLong("id"));
+            alocacao.setDisciplina(rs.getString("disciplina"));
+            alocacao.setHorario(rs.getString("horario"));
+            alocacao.setDiaSemana(rs.getString("dia_semana"));
+            alocacao.setBloco(rs.getString("bloco"));
+            alocacao.setSala(rs.getString("sala"));
+            alocacao.setTipoSala(rs.getString("tipo_sala"));
+            return alocacao;
+        }, idUsuario);
     }
 }

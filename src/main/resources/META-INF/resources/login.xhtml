@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+<h:head>
+    <title>Entrar | Sistema SLA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="estilo.css"/>
+</h:head>
+<h:body styleClass="pagina-login">
+    <main class="login-layout">
+        <section class="login-apresentacao">
+            <div class="marca marca-clara">
+                <span class="marca-simbolo">SLA</span>
+                <span>Sistema de Localização Acadêmica</span>
+            </div>
+            <div class="apresentacao-conteudo">
+                <span class="etiqueta">Campus conectado</span>
+                <h1>Encontre sua próxima aula sem perder tempo.</h1>
+                <p>Consulte disciplinas, horários, blocos e salas em um único lugar.</p>
+            </div>
+            <p class="apresentacao-rodape">UNICEPLAC · Portal Acadêmico</p>
+        </section>
+
+        <section class="login-area">
+            <div class="login-card">
+                <div class="login-cabecalho">
+                    <span class="icone-login">→</span>
+                    <h2>Bem-vindo</h2>
+                    <p>Use seus dados acadêmicos para acessar.</p>
+                </div>
+
+                <h:form id="formLogin" styleClass="formulario">
+                    <h:messages globalOnly="true" styleClass="mensagem-erro"/>
+
+                    <div class="campo">
+                        <h:outputLabel for="email" value="E-mail institucional"/>
+                        <h:inputText id="email" value="#{loginBean.email}"
+                                     required="true" requiredMessage="Informe o e-mail."
+                                     autocomplete="email"/>
+                        <h:message for="email" styleClass="erro-campo"/>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel for="senha" value="Senha"/>
+                        <h:inputSecret id="senha" value="#{loginBean.senha}"
+                                       required="true" requiredMessage="Informe a senha."
+                                       autocomplete="current-password"/>
+                        <h:message for="senha" styleClass="erro-campo"/>
+                    </div>
+
+                    <h:commandButton value="Entrar no sistema" action="#{loginBean.entrar}"
+                                     styleClass="botao botao-principal"/>
+                </h:form>
+
+                <p class="ajuda-login">Em caso de dificuldade, procure a secretaria acadêmica.</p>
+            </div>
+        </section>
+    </main>
+</h:body>
+</html>

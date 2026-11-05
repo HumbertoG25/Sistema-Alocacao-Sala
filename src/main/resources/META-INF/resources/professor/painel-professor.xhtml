@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<f:metadata>
+    <f:viewAction action="#{professorBean.carregar}" onPostback="false"/>
+</f:metadata>
+<h:head>
+    <title>Agenda de aulas | Sistema SLA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet library="css" name="estilo.css"/>
+</h:head>
+<h:body styleClass="pagina-painel">
+    <header class="topo">
+        <div class="container topo-conteudo">
+            <div class="marca">
+                <span class="marca-simbolo">SLA</span>
+                <span class="marca-nome">Localização Acadêmica</span>
+            </div>
+            <h:form>
+                <div class="usuario-topo">
+                    <div class="usuario-texto">
+                        <strong>#{loginBean.usuarioLogado.nome}</strong>
+                        <span>Professor</span>
+                    </div>
+                    <span class="avatar">#{loginBean.usuarioLogado.nome.substring(0, 1)}</span>
+                    <h:commandButton value="Sair" action="#{loginBean.sair}" styleClass="botao-sair"/>
+                </div>
+            </h:form>
+        </div>
+    </header>
+
+    <main class="container conteudo-painel">
+        <h:messages globalOnly="true" styleClass="mensagem-erro mensagem-painel"/>
+
+        <section class="boas-vindas">
+            <div>
+                <span class="etiqueta etiqueta-verde">Painel do professor</span>
+                <h1>Sua agenda de aulas</h1>
+                <p>Visualize os horários e os ambientes reservados para cada disciplina.</p>
+            </div>
+            <div class="resumo">
+                <strong>#{professorBean.alocacoes.size()}</strong>
+                <span>#{professorBean.alocacoes.size() == 1 ? 'alocação' : 'alocações'}</span>
+            </div>
+        </section>
+
+        <h:panelGroup layout="block" styleClass="estado-vazio" rendered="#{not professorBean.erroCarregamento and professorBean.semAlocacoes}">
+            <span class="estado-icone">○</span>
+            <h2>Nenhuma aula encontrada</h2>
+            <p>Não há uma sala vinculada ao seu usuário neste momento.</p>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" styleClass="tabela-area" rendered="#{not professorBean.erroCarregamento and not professorBean.semAlocacoes}">
+            <div class="tabela-cabecalho">
+                <h2>Alocações da semana</h2>
+                <span>#{professorBean.alocacoes.size()} registro(s)</span>
+            </div>
+            <div class="tabela-responsiva">
+                <table class="tabela-alocacoes">
+                    <thead>
+                    <tr>
+                        <th>Dia</th>
+                        <th>Disciplina</th>
+                        <th>Horário</th>
+                        <th>Sala</th>
+                        <th>Bloco</th>
+                        <th>Tipo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <ui:repeat value="#{professorBean.alocacoes}" var="aula">
+                        <tr>
+                            <td data-label="Dia"><strong>#{aula.diaSemana}</strong></td>
+                            <td data-label="Disciplina">#{aula.disciplina}</td>
+                            <td data-label="Horário">#{aula.horario}</td>
+                            <td data-label="Sala">#{aula.sala}</td>
+                            <td data-label="Bloco">#{aula.bloco}</td>
+                            <td data-label="Tipo"><span class="tipo-aula">#{aula.tipoSala}</span></td>
+                        </tr>
+                    </ui:repeat>
+                    </tbody>
+                </table>
+            </div>
+        </h:panelGroup>
+    </main>
+</h:body>
+</html>
