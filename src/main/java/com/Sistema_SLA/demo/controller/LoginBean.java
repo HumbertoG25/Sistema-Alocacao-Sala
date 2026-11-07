@@ -46,6 +46,9 @@ public class LoginBean implements Serializable {
         usuarioLogado = usuario;
         senha = null;
 
+        if (isAdm()) {
+            return "/menu.xhtml?faces-redirect=true";
+        }
         if (isProfessor()) {
             return "/professor/painel-professor.xhtml?faces-redirect=true";
         }
@@ -58,6 +61,9 @@ public class LoginBean implements Serializable {
     }
 
     public String abrirInicio() {
+        if (isAdm()) {
+            return "/menu.xhtml?faces-redirect=true";
+        }
         if (isProfessor()) {
             return "/professor/painel-professor.xhtml?faces-redirect=true";
         }
@@ -77,6 +83,10 @@ public class LoginBean implements Serializable {
 
     public boolean isProfessor() {
         return isLogado() && "PROFESSOR".equalsIgnoreCase(usuarioLogado.getPerfil());
+    }
+
+    public boolean isAdm() {
+        return isLogado() && "ADM".equalsIgnoreCase(usuarioLogado.getPerfil());
     }
 
     public String getEmail() {

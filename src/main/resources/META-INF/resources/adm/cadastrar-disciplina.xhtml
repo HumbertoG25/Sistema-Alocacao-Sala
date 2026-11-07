@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>SLA - Cadastro de Disciplina</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="estilo.css"/>
+    </h:head>
+    <h:body styleClass="pagina-painel">
+        <header class="topo">
+            <div class="container topo-conteudo">
+                <div class="marca">
+                    <span class="marca-simbolo">SLA</span>
+                    <span>Painel Administrativo</span>
+                </div>
+                <div class="usuario-topo">
+                    <div class="usuario-texto">
+                        <strong>Administrador</strong>
+                        <span>Gerenciamento de Disciplinas</span>
+                    </div>
+                    <div class="avatar">ADM</div>
+                    <h:form style="display:inline;">
+                        <h:commandButton value="Sair" action="#{loginBean.sair}" styleClass="botao-sair"/>
+                    </h:form>
+                </div>
+            </div>
+        </header>
+
+        <main class="container conteudo-painel">
+            <div class="boas-vindas">
+                <div>
+                    <span class="etiqueta etiqueta-verde">Módulo de Cadastros</span>
+                    <h1>Cadastrar Nova Disciplina</h1>
+                    <p>Adicione uma nova disciplina ao sistema para que ela fique disponível nas alocações acadêmicas.</p>
+                </div>
+                <div>
+                    <h:link value="← Voltar ao Menu" outcome="/menu.xhtml" styleClass="botao-sair" style="text-decoration: none; display: inline-block; text-align: center; line-height: normal;" />
+                </div>
+            </div>
+
+            <div class="tabela-area" style="padding: 35px; max-width: 600px; margin: 0 auto;">
+                <div class="tabela-cabecalho" style="padding: 0 0 20px 0;">
+                    <h2>Formulário da Disciplina</h2>
+                    <span>Preencha os dados</span>
+                </div>
+
+                <h:form id="formDisciplina" styleClass="formulario">
+                    <h:messages globalOnly="true" styleClass="mensagem-erro"/>
+
+                    <div class="campo">
+                        <h:outputLabel value="Nome da Disciplina:" />
+                        <h:inputText value="#{disciplinaBean.disciplina.nome}" required="true" requiredMessage="Informe o nome da disciplina." autocomplete="off"/>
+                    </div>
+
+                    <h:commandButton value="Salvar Disciplina" action="#{disciplinaBean.salvarDisciplina}" styleClass="botao botao-principal" style="width: 100%; margin-top: 10px;" />
+                </h:form>
+            </div>
+        </main>
+    </h:body>
+</html>

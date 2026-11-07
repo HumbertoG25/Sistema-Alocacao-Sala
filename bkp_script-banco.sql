@@ -41,13 +41,14 @@ CREATE TABLE alocacoes (
 
 select * from perfis;
 
-INSERT INTO perfis (nome) VALUES ('ALUNO'), ('PROFESSOR');
+INSERT INTO perfis (nome) VALUES ('ALUNO'), ('PROFESSOR'), ('ADM');
 
 INSERT INTO usuarios (nome, email, senha, perfil_id) VALUES 
 ('Carlos Aluno', 'carlos@uniceplac.edu.br', '123456', 1),
 ('Mariana Aluna', 'mariana@uniceplac.edu.br', '123456', 1),
 ('Prof. Roberto', 'roberto@uniceplac.edu.br', '123456', 2),
-('Professora Ana', 'ana@uniceplac.edu.br', '123456', 2);
+('Professora Ana', 'ana@uniceplac.edu.br', '123456', 2),
+('Admin', 'adm@uniceplac.edu.br', '123456', 3);
 
 INSERT INTO salas (nome, bloco, tipo) VALUES 
 ('Sala 101', 'Bloco A', 'Teórica'),
@@ -63,4 +64,6 @@ INSERT INTO alocacoes (usuario_id, disciplina_id, sala_id, horario, dia_semana) 
 
 (3, 1, 1, '19:00 - 22:30', 'Segunda-feira'),
 
-(4, 2, 2, '19:00 - 22:30', 'Terça-feira');
+(4, 2, 2, '19:00 - 22:30', 'Terça-feira'),
+
+(2, 2, 2, '19:00 - 22:30', 'Terça-feira');

@@ -1,5 +1,6 @@
 package com.Sistema_SLA.demo.dao;
 
+import com.Sistema_SLA.demo.model.Alocacao;
 import com.Sistema_SLA.demo.model.AlocacaoDetalhe;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -45,5 +46,16 @@ public class AlocacaoDao {
             alocacao.setTipoSala(rs.getString("tipo_sala"));
             return alocacao;
         }, idUsuario);
+    }
+
+    public void inserir(Alocacao alocacao) {
+        String sql = "INSERT INTO alocacoes (usuario_id, sala_id, disciplina_id, horario, dia_semana) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, 
+            alocacao.getUsuarioId(), 
+            alocacao.getSalaId(), 
+            alocacao.getDisciplinaId(), 
+            alocacao.getHorario(), 
+            alocacao.getDiaSemana()
+        );
     }
 }

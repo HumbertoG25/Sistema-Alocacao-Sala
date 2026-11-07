@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>SLA - Alocação Acadêmica</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="estilo.css"/>
+    </h:head>
+    <h:body styleClass="pagina-painel">
+        <header class="topo">
+            <div class="container topo-conteudo">
+                <div class="marca">
+                    <span class="marca-simbolo">SLA</span>
+                    <span>Painel Administrativo</span>
+                </div>
+                <div class="usuario-topo">
+                    <div class="usuario-texto">
+                        <strong>Administrador</strong>
+                        <span>Gerenciamento de Alocações</span>
+                    </div>
+                    <div class="avatar">ADM</div>
+                    <h:form style="display:inline;">
+                        <h:commandButton value="Sair" action="#{loginBean.sair}" styleClass="botao-sair"/>
+                    </h:form>
+                </div>
+            </div>
+        </header>
+
+        <main class="container conteudo-painel">
+            <div class="boas-vindas">
+                <div>
+                    <span class="etiqueta etiqueta-verde">Módulo de Vínculos</span>
+                    <h1>Realizar Nova Alocação</h1>
+                    <p>Vincule um usuário (aluno ou professor) a uma sala e disciplina para o respectivo horário e dia da semana.</p>
+                </div>
+                <div>
+                    <h:link value="← Voltar ao Menu" outcome="/menu.xhtml" styleClass="botao-sair" style="text-decoration: none; display: inline-block; text-align: center; line-height: normal;" />
+                </div>
+            </div>
+
+            <div class="tabela-area" style="padding: 35px; max-width: 650px; margin: 0 auto;">
+                <div class="tabela-cabecalho" style="padding: 0 0 20px 0;">
+                    <h2>Formulário de Alocação</h2>
+                    <span>Preencha os campos abaixo</span>
+                </div>
+
+                <h:form id="formAlocacao" styleClass="formulario">
+                    <h:messages globalOnly="true" styleClass="mensagem-erro"/>
+
+                    <div class="campo">
+                        <h:outputLabel value="Usuário (Aluno / Professor):" />
+                        <h:selectOneMenu value="#{alocacaoBean.alocacao.usuarioId}" required="true" requiredMessage="Selecione o usuário." styleClass="campo input" style="height: 50px;">
+                            <f:selectItem itemLabel="Selecione o usuário..." itemValue="" />
+                            <f:selectItems value="#{alocacaoBean.listaUsuarios}" var="u" 
+                                           itemValue="#{u.id}" itemLabel="#{u.nome} (ID: #{u.id})" />
+                        </h:selectOneMenu>
+                        <h:message for="" styleClass="erro-campo"/>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel value="Sala:" />
+                        <h:selectOneMenu value="#{alocacaoBean.alocacao.salaId}" required="true" requiredMessage="Selecione a sala." styleClass="campo input" style="height: 50px;">
+                            <f:selectItem itemLabel="Selecione a sala..." itemValue="" />
+                            <f:selectItems value="#{alocacaoBean.listaSalas}" var="s" 
+                                           itemValue="#{s.id}" itemLabel="#{s.nome} - #{s.bloco} (#{s.tipo})" />
+                        </h:selectOneMenu>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel value="Disciplina:" />
+                        <h:selectOneMenu value="#{alocacaoBean.alocacao.disciplinaId}" required="true" requiredMessage="Selecione a disciplina." styleClass="campo input" style="height: 50px;">
+                            <f:selectItem itemLabel="Selecione a disciplina..." itemValue="" />
+                            <f:selectItems value="#{alocacaoBean.listaDisciplinas}" var="d" 
+                                           itemValue="#{d.id}" itemLabel="#{d.nome}" />
+                        </h:selectOneMenu>
+                    </div>
+
+                    <!-- Dia da Semana com <h:selectOneMenu> -->
+                    <div class="campo">
+                        <h:outputLabel value="Dia da Semana:" />
+                        <h:selectOneMenu value="#{alocacaoBean.alocacao.diaSemana}" required="true" requiredMessage="Selecione o dia da semana." styleClass="campo input" style="height: 50px;">
+                            <f:selectItem itemLabel="Selecione o dia da semana..." itemValue="" />
+                            <f:selectItem itemLabel="Segunda-feira" itemValue="Segunda-feira" />
+                            <f:selectItem itemLabel="Terça-feira" itemValue="Terça-feira" />
+                            <f:selectItem itemLabel="Quarta-feira" itemValue="Quarta-feira" />
+                            <f:selectItem itemLabel="Quinta-feira" itemValue="Quinta-feira" />
+                            <f:selectItem itemLabel="Sexta-feira" itemValue="Sexta-feira" />
+                            <f:selectItem itemLabel="Sábado" itemValue="Sábado" />
+                            <f:selectItem itemLabel="Domingo" itemValue="Domingo" />
+                        </h:selectOneMenu>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel value="Horário (Ex: 19:00 - 22:30):" />
+                        <h:inputText value="#{alocacaoBean.alocacao.horario}" required="true" requiredMessage="Informe o horário." autocomplete="off"/>
+                    </div>
+
+                    <h:commandButton value="Salvar Alocação" action="#{alocacaoBean.salvarAlocacao}" styleClass="botao botao-principal" style="width: 100%; margin-top: 10px;" />
+                </h:form>
+            </div>
+        </main>
+    </h:body>
+</html>

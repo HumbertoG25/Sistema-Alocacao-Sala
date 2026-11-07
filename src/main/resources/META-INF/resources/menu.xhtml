@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>SLA - Menu Principal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="estilo.css"/>
+    </h:head>
+    <h:body styleClass="pagina-painel">
+        <header class="topo">
+            <div class="container topo-conteudo">
+                <div class="marca">
+                    <span class="marca-simbolo">SLA</span>
+                    <span>Painel Administrativo</span>
+                </div>
+                <div class="usuario-topo">
+                    <div class="usuario-texto">
+                        <strong>Administrador</strong>
+                        <span>Gerenciamento do Sistema</span>
+                    </div>
+                    <div class="avatar">ADM</div>
+                    <h:form style="display:inline;">
+                        <h:commandButton value="Sair" action="#{loginBean.sair}" styleClass="botao-sair"/>
+                    </h:form>
+                </div>
+            </div>
+        </header>
+
+        <main class="container conteudo-painel">
+            <div class="boas-vindas">
+                <div>
+                    <span class="etiqueta etiqueta-verde">Menu Principal</span>
+                    <h1>Central de Operações</h1>
+                    <p>Selecione abaixo a operação desejada para gerenciar os cadastros e alocações do campus.</p>
+                </div>
+            </div>
+
+            <div class="tabela-area" style="padding: 35px; max-width: 700px; margin: 0 auto;">
+                <div class="tabela-cabecalho" style="padding: 0 0 20px 0;">
+                    <h2>Opções de Gerenciamento</h2>
+                    <span>Escolha um módulo</span>
+                </div>
+
+                <style>
+                    .menu-lista {
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;
+                        display: grid;
+                        gap: 15px;
+                    }
+                    .menu-item-link {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 18px 22px;
+                        border: 1px solid var(--borda);
+                        border-radius: 14px;
+                        background: var(--branco);
+                        color: var(--texto);
+                        text-decoration: none;
+                        font-weight: 700;
+                        font-size: 15px;
+                        transition: all 0.2s ease;
+                    }
+                    .menu-item-link:hover {
+                        border-color: var(--verde-500);
+                        background: var(--verde-100);
+                        color: var(--verde-900);
+                        transform: translateY(-2px);
+                        box-shadow: 0 6px 20px rgba(18, 58, 49, 0.08);
+                    }
+                </style>
+
+                <ul class="menu-lista">
+                    <li>
+                        <h:link outcome="adm/alocacao.xhtml" styleClass="menu-item-link">
+                            <span>📌 Realizar Alocação Acadêmica</span>
+                            <span style="color: var(--texto-suave);">→</span>
+                        </h:link>
+                    </li>
+                    <li>
+                        <h:link outcome="adm/cadastrar-usuario.xhtml" styleClass="menu-item-link">
+                            <span>👤 Cadastrar Novo Usuário (Aluno/Professor)</span>
+                            <span style="color: var(--texto-suave);">→</span>
+                        </h:link>
+                    </li>
+                    <li>
+                        <h:link outcome="adm/cadastrar-sala.xhtml" styleClass="menu-item-link">
+                            <span>🏫 Cadastrar Nova Sala</span>
+                            <span style="color: var(--texto-suave);">→</span>
+                        </h:link>
+                    </li>
+                    <li>
+                        <h:link outcome="adm/cadastrar-disciplina.xhtml" styleClass="menu-item-link">
+                            <span>📚 Cadastrar Nova Disciplina</span>
+                            <span style="color: var(--texto-suave);">→</span>
+                        </h:link>
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </h:body>
+</html>

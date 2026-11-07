@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>SLA - Cadastro de Sala</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="estilo.css"/>
+    </h:head>
+    <h:body styleClass="pagina-painel">
+        <header class="topo">
+            <div class="container topo-conteudo">
+                <div class="marca">
+                    <span class="marca-simbolo">SLA</span>
+                    <span>Painel Administrativo</span>
+                </div>
+                <div class="usuario-topo">
+                    <div class="usuario-texto">
+                        <strong>Administrador</strong>
+                        <span>Gerenciamento de Salas</span>
+                    </div>
+                    <div class="avatar">ADM</div>
+                    <h:form style="display:inline;">
+                        <h:commandButton value="Sair" action="#{loginBean.sair}" styleClass="botao-sair"/>
+                    </h:form>
+                </div>
+            </div>
+        </header>
+
+        <main class="container conteudo-painel">
+            <div class="boas-vindas">
+                <div>
+                    <span class="etiqueta etiqueta-verde">Módulo de Cadastros</span>
+                    <h1>Cadastrar Nova Sala</h1>
+                    <p>Adicione uma nova sala teórica ou laboratório ao campus para habilitá-la nas alocações.</p>
+                </div>
+                <div>
+                    <h:link value="← Voltar ao Menu" outcome="/menu.xhtml" styleClass="botao-sair" style="text-decoration: none; display: inline-block; text-align: center; line-height: normal;" />
+                </div>
+            </div>
+
+            <div class="tabela-area" style="padding: 35px; max-width: 600px; margin: 0 auto;">
+                <div class="tabela-cabecalho" style="padding: 0 0 20px 0;">
+                    <h2>Formulário da Sala</h2>
+                    <span>Preencha os dados</span>
+                </div>
+
+                <h:form id="formSala" styleClass="formulario">
+                    <h:messages globalOnly="true" styleClass="mensagem-erro"/>
+
+                    <div class="campo">
+                        <h:outputLabel value="Nome/Número da Sala:" />
+                        <h:inputText value="#{salaBean.sala.nome}" required="true" requiredMessage="Informe o nome da sala." autocomplete="off"/>
+                    </div>
+
+                    <!-- Tipo da Sala com <h:selectOneMenu> -->
+                    <div class="campo">
+                        <h:outputLabel value="Tipo da Sala:" />
+                        <h:selectOneMenu value="#{salaBean.sala.tipo}" required="true" requiredMessage="Selecione o tipo da sala." styleClass="campo input" style="height: 50px;">
+                            <f:selectItem itemLabel="Selecione o tipo..." itemValue="" />
+                            <f:selectItem itemLabel="Teórica" itemValue="Teórica" />
+                            <f:selectItem itemLabel="Prática" itemValue="Prática" />
+                        </h:selectOneMenu>
+                    </div>
+
+                    <div class="campo">
+                        <h:outputLabel value="Bloco (Ex: Bloco A):" />
+                        <h:inputText value="#{salaBean.sala.bloco}" required="true" requiredMessage="Informe o bloco." autocomplete="off"/>
+                    </div>
+
+                    <h:commandButton value="Salvar Sala" action="#{salaBean.salvarSala}" styleClass="botao botao-principal" style="width: 100%; margin-top: 10px;" />
+                </h:form>
+            </div>
+        </main>
+    </h:body>
+</html>

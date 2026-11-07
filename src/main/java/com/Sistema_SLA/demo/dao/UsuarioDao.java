@@ -4,6 +4,7 @@ import com.Sistema_SLA.demo.model.Usuario;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -34,4 +35,27 @@ public class UsuarioDao {
             return usuario;
         }, email).stream().findFirst();
     }
+
+    public void inserir(Usuario usuario) {
+        String sql = "INSERT INTO usuarios (nome, email, senha, perfil_id) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, 
+            usuario.getNome(), 
+            usuario.getEmail(), 
+            usuario.getSenha(), 
+            usuario.getPerfilId()
+        );
+    }
+
+    public List<Usuario> listarTodos() {
+    String sql = "SELECT id, nome, email, senha, perfil_id FROM usuarios";
+    return jdbcTemplate.query(sql, (rs, rowNum) -> {
+        Usuario usuario = new Usuario();
+        usuario.setId(rs.getLong("id"));
+        usuario.setNome(rs.getString("nome"));
+        usuario.setEmail(rs.getString("email"));
+        usuario.setSenha(rs.getString("senha"));
+        usuario.setPerfilId(rs.getLong("perfil_id"));
+        return usuario;
+    });
+}
 }

@@ -76,7 +76,7 @@ Em Linux ou macOS:
 Depois, abra:
 
 ```text
-http://localhost:8080/
+http://localhost:8080/login.xhtml
 ```
 
 ## Usuários de demonstração
