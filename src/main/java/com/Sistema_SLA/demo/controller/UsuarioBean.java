@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.Sistema_SLA.demo.model.Usuario;
 import com.Sistema_SLA.demo.service.CadastroService;
 
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
@@ -18,8 +20,13 @@ public class UsuarioBean {
     private Usuario usuario = new Usuario();
 
     public String salvarUsuario() {
-        cadastroService.cadastrarUsuario(usuario);
-        this.usuario = new Usuario();
+        try{
+            cadastroService.cadastrarUsuario(usuario);
+            this.usuario = new Usuario();
+        }catch (RuntimeException e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro:", e.getMessage()));
+        }
         return null;
     }
 

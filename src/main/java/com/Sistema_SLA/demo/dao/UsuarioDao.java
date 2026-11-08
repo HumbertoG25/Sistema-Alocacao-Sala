@@ -60,7 +60,7 @@ public class UsuarioDao {
     }
 
     public void deletar(Long id) {
-        String sql = "DELETE FROM alocacoes WHERE id = ?";
+        String sql = "DELETE FROM usuariosS WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 }

@@ -8,7 +8,11 @@ import com.Sistema_SLA.demo.model.Alocacao;
 import com.Sistema_SLA.demo.model.Disciplina;
 import com.Sistema_SLA.demo.model.Sala;
 import com.Sistema_SLA.demo.model.Usuario;
+import com.Sistema_SLA.demo.service.CadastroService;
+
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +21,10 @@ import java.util.List;
 
 @Named
 @ViewScoped
-public class AlocacaoBean {
+public class AlocacaoBean implements Serializable{
+
     @Autowired
-    private AlocacaoDao alocacaoDao;
+    private CadastroService cadastroService;
     
     @Autowired
     private SalaDao salaDao;
@@ -44,8 +49,13 @@ public class AlocacaoBean {
     }
 
     public String salvarAlocacao() {
-        alocacaoDao.inserir(alocacao);
-        this.alocacao = new Alocacao(); 
+        try{
+            cadastroService.realizarAlocacao(alocacao);
+            this.alocacao = new Alocacao();
+        } catch (RuntimeException e){
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atenção:", e.getMessage()));
+        }
         return null; 
     }
 

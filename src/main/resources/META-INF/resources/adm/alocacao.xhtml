@@ -77,7 +77,7 @@
                         </h:selectOneMenu>
                     </div>
 
-                    <!-- Dia da Semana com <h:selectOneMenu> -->
+                    <!-- Dia da Semana -->
                     <div class="campo">
                         <h:outputLabel value="Dia da Semana:" />
                         <h:selectOneMenu value="#{alocacaoBean.alocacao.diaSemana}" required="true" requiredMessage="Selecione o dia da semana." styleClass="campo input" style="height: 50px;">
@@ -92,9 +92,15 @@
                         </h:selectOneMenu>
                     </div>
 
+                    <!-- Horário (Agora com opções fixas em <h:selectOneMenu>) -->
                     <div class="campo">
-                        <h:outputLabel value="Horário (Ex: 19:00 - 22:30):" />
-                        <h:inputText value="#{alocacaoBean.alocacao.horario}" required="true" requiredMessage="Informe o horário." autocomplete="off"/>
+                        <h:outputLabel value="Horário:" />
+                        <h:selectOneMenu value="#{alocacaoBean.alocacao.horario}" required="true" requiredMessage="Selecione o horário." styleClass="campo input" style="height: 50px;">
+                            <f:selectItem itemLabel="Selecione o horário..." itemValue="" />
+                            <f:selectItem itemLabel="08:00 - 12:00" itemValue="08:00 - 12:00" />
+                            <f:selectItem itemLabel="14:00 - 16:00" itemValue="14:00 - 16:00" />
+                            <f:selectItem itemLabel="19:00 - 22:30" itemValue="19:00 - 22:30" />
+                        </h:selectOneMenu>
                     </div>
 
                     <h:commandButton value="Salvar Alocação" action="#{alocacaoBean.salvarAlocacao}" styleClass="botao botao-principal" style="width: 100%; margin-top: 10px;" />

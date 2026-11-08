@@ -98,4 +98,15 @@ public class AlocacaoDao {
             return alocacao;
         });
     }
+
+    public boolean existeConflitoHorario(Long salaId, Long usuarioId, String diaSemana, String horario) {
+        String sql = """
+            SELECT COUNT(*) FROM alocacoes 
+            WHERE dia_semana = ? AND horario = ? 
+            AND (sala_id = ? OR usuario_id = ?)
+        """;
+        
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, diaSemana, horario, salaId, usuarioId);
+        return count != null && count > 0;
+    }
 }

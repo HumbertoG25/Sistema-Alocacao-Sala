@@ -47,8 +47,9 @@
                 </div>
 
                 <h:form id="formUsuario" styleClass="formulario">
-                    <h:messages globalOnly="true" styleClass="mensagem-erro"/>
-
+                        <h:messages globalOnly="false" showSummary="true" showDetail="true" 
+                            styleClass="mensagem-sistema" 
+                            style="color: var(--erro, #d9534f); margin-bottom: 20px; list-style: none; padding: 0; font-size: 14px; font-weight: 500;" />
                     <div class="campo">
                         <h:outputLabel value="Nome Completo:" />
                         <h:inputText value="#{usuarioBean.usuario.nome}" required="true" requiredMessage="Informe o nome." autocomplete="off"/>

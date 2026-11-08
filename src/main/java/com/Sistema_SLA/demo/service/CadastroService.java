@@ -28,6 +28,11 @@ public class CadastroService {
     private AlocacaoDao alocacaoDao;
 
     public void cadastrarUsuario(Usuario usuario) {
+
+        if (usuarioDao.buscaEmail(usuario.getEmail()).isPresent()){
+            throw new RuntimeException("Já existe um usuário cadastrado com este e-mail!");
+        }
+
         usuarioDao.inserir(usuario);
     }
 
@@ -40,6 +45,17 @@ public class CadastroService {
     }
 
     public void realizarAlocacao(Alocacao alocacao) {
+
+        boolean conflito = alocacaoDao.existeConflitoHorario(
+            alocacao.getSalaId(), 
+            alocacao.getUsuarioId(), 
+            alocacao.getDiaSemana(), 
+            alocacao.getHorario()
+        );
+
+        if (conflito) {
+            throw new RuntimeException("Conflito de horário: Esta sala já está ocupada ou este usuário já possui uma alocação neste mesmo dia e horário!");
+        }
         alocacaoDao.inserir(alocacao);
     }
 

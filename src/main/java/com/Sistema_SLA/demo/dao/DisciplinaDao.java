@@ -30,7 +30,7 @@ public class DisciplinaDao {
     }
 
     public void deletar(Long id) {
-        String sql = "DELETE FROM alocacoes WHERE id = ?";
+        String sql = "DELETE FROM disciplinas WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 }
