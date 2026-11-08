@@ -46,16 +46,21 @@ public class UsuarioDao {
         );
     }
 
-    public List<Usuario> listarTodos() {
-    String sql = "SELECT id, nome, email, senha, perfil_id FROM usuarios";
-    return jdbcTemplate.query(sql, (rs, rowNum) -> {
-        Usuario usuario = new Usuario();
-        usuario.setId(rs.getLong("id"));
-        usuario.setNome(rs.getString("nome"));
-        usuario.setEmail(rs.getString("email"));
-        usuario.setSenha(rs.getString("senha"));
-        usuario.setPerfilId(rs.getLong("perfil_id"));
-        return usuario;
-    });
-}
+    public List<Usuario> listar() {
+        String sql = "SELECT id, nome, email, senha, perfil_id FROM usuarios";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Usuario usuario = new Usuario();
+            usuario.setId(rs.getLong("id"));
+            usuario.setNome(rs.getString("nome"));
+            usuario.setEmail(rs.getString("email"));
+            usuario.setSenha(rs.getString("senha"));
+            usuario.setPerfilId(rs.getLong("perfil_id"));
+            return usuario;
+        });
+    }
+
+    public void deletar(Long id) {
+        String sql = "DELETE FROM alocacoes WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }

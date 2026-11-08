@@ -58,4 +58,44 @@ public class AlocacaoDao {
             alocacao.getDiaSemana()
         );
     }
+
+    public void deletar(Long id) {
+        String sql = "DELETE FROM alocacoes WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
+
+    public List<Alocacao> listar() {
+        String sql = "SELECT a.id, a.dia_semana, a.horario, " +
+                 "       u.nome AS usuario_nome, u.perfil_id, " +
+                 "       s.nome AS sala_nome, s.tipo AS sala_tipo, " +
+                 "       d.nome AS disciplina_nome " +
+                 "FROM alocacoes a " +
+                 "JOIN usuarios u ON a.usuario_id = u.id " +
+                 "JOIN salas s ON a.sala_id = s.id " +
+                 "JOIN disciplinas d ON a.disciplina_id = d.id";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Alocacao alocacao = new Alocacao();
+            alocacao.setId(rs.getLong("id"));
+            alocacao.setDiaSemana(rs.getString("dia_semana"));
+            alocacao.setHorario(rs.getString("horario"));
+            
+            alocacao.setUsuarioNome(rs.getString("usuario_nome"));
+
+            Long perfilId = rs.getLong("perfil_id");
+            if (perfilId == 1) {
+                alocacao.setUsuarioTipo("Aluno");
+            } else if (perfilId == 2) {
+                alocacao.setUsuarioTipo("Professor");
+            } else {
+                alocacao.setUsuarioTipo("Administrador");
+            }
+
+            alocacao.setSalaNome(rs.getString("sala_nome"));
+            alocacao.setSalaTipo(rs.getString("sala_tipo"));
+            alocacao.setDisciplinaNome(rs.getString("disciplina_nome"));
+            
+            return alocacao;
+        });
+    }
 }

@@ -38,9 +38,9 @@ public class AlocacaoBean {
 
     @PostConstruct
     public void init() {
-        listaSalas = salaDao.listarTodas();
-        listaDisciplinas = disciplinaDao.listarTodas();
-        listaUsuarios = usuarioDao.listarTodos();
+        listaSalas = salaDao.listar();
+        listaDisciplinas = disciplinaDao.listar();
+        listaUsuarios = usuarioDao.listar();
     }
 
     public String salvarAlocacao() {

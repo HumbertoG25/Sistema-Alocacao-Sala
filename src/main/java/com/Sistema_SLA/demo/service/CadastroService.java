@@ -42,4 +42,20 @@ public class CadastroService {
     public void realizarAlocacao(Alocacao alocacao) {
         alocacaoDao.inserir(alocacao);
     }
+
+    public void excluirUsuario(Long id) {
+        usuarioDao.deletar(id);
+    }
+
+    public void excluirSala(Long id) {
+        salaDao.deletar(id);
+    }
+
+    public void excluirDisciplina(Long id) {
+        disciplinaDao.deletar(id);
+    }
+
+    public void excluirAlocacao(Long id) {
+        alocacaoDao.deletar(id);
+    }
 }

@@ -19,13 +19,19 @@ public class DisciplinaDao {
         jdbcTemplate.update(sql, disciplina.getNome());
     }
 
-    public List<Disciplina> listarTodas() {
-    String sql = "SELECT id, nome FROM disciplinas";
-    return jdbcTemplate.query(sql, (rs, rowNum) -> {
-        Disciplina disciplina = new Disciplina();
-        disciplina.setId(rs.getLong("id"));
-        disciplina.setNome(rs.getString("nome"));
-        return disciplina;
-    });
+    public List<Disciplina> listar() {
+        String sql = "SELECT id, nome FROM disciplinas";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Disciplina disciplina = new Disciplina();
+            disciplina.setId(rs.getLong("id"));
+            disciplina.setNome(rs.getString("nome"));
+            return disciplina;
+        });
+    }
+
+    public void deletar(Long id) {
+        String sql = "DELETE FROM alocacoes WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }
-}
+

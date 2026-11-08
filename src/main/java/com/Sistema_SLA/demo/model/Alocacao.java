@@ -7,6 +7,11 @@ public class Alocacao {
     private Long disciplinaId;
     private String horario;
     private String diaSemana;
+    private String usuarioNome;
+    private String usuarioTipo;
+    private String salaNome;
+    private String salaTipo;
+    private String disciplinaNome;
 
     public Alocacao() {
     }
@@ -60,5 +65,40 @@ public class Alocacao {
     }
     public String getDiaSemana() {
         return diaSemana;
+    }
+
+    public String getUsuarioNome() {
+         return usuarioNome; 
+        }
+    public void setUsuarioNome(String usuarioNome) {
+         this.usuarioNome = usuarioNome; 
+        }
+
+    public String getUsuarioTipo() { 
+        return usuarioTipo; }
+        
+    public void setUsuarioTipo(String usuarioTipo) {
+         this.usuarioTipo = usuarioTipo; 
+        }
+
+    public String getSalaNome() { 
+        return salaNome; 
+    }
+    public void setSalaNome(String salaNome) {
+         this.salaNome = salaNome; 
+        }
+
+    public String getSalaTipo() { 
+        return salaTipo; 
+    }
+    public void setSalaTipo(String salaTipo) { 
+        this.salaTipo = salaTipo; 
+    }
+
+    public String getDisciplinaNome() { 
+        return disciplinaNome; 
+    }
+    public void setDisciplinaNome(String disciplinaNome) { 
+        this.disciplinaNome = disciplinaNome; 
     }
 }
