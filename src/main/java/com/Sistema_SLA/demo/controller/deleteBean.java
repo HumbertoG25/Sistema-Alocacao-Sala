@@ -23,27 +23,34 @@ public class deleteBean implements Serializable {
     @Autowired 
     private CadastroService cadastroService;
 
+    // DAOs para acessar os dados de salas, disciplinas, usuários e alocações
     @Autowired private SalaDao salaDao;
     @Autowired private DisciplinaDao disciplinaDao;
     @Autowired private UsuarioDao usuarioDao;
     @Autowired private AlocacaoDao alocacaoDao;
 
+    // Listas para armazenar os dados carregados do banco de dados
     private List<Sala> salas;
     private List<Disciplina> disciplinas;
     private List<Usuario> usuarios;
     private List<Alocacao> alocacoes;
 
+    // Método chamado após a construção do bean para carregar os dados do banco de dados
     @PostConstruct
     public void init() {
         carregarDados();
     }
     
+    // Método para carregar os dados de salas, disciplinas, usuários e alocações do banco de dados
     private void carregarDados() {
         salas = salaDao.listar();
         disciplinas = disciplinaDao.listar();
         usuarios = usuarioDao.listar();
         alocacoes = alocacaoDao.listar();
     }
+
+    // Métodos para excluir salas, disciplinas, usuários e alocações,
+    //  chamando o serviço de cadastro e recarregando os dados após a exclusão
 
     public void excluirSala(Long id) {
         cadastroService.excluirSala(id);
@@ -65,6 +72,9 @@ public class deleteBean implements Serializable {
         carregarDados();
     }
 
+    // Getters para as listas de salas, disciplinas, usuários e alocações,
+    //  permitindo que sejam acessadas na interface do usuário
+    
     public List<Sala> getSalas() {
          return salas; 
         }

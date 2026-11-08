@@ -35,12 +35,15 @@ public class AlocacaoBean implements Serializable{
     @Autowired
     private UsuarioDao usuarioDao;
 
+    // Objeto de alocação que será preenchido com os dados do formulário
     private Alocacao alocacao = new Alocacao();
     
+    // Listas de salas, disciplinas e usuários que serão exibidas nos campos de seleção do formulário
     private List<Sala> listaSalas;
     private List<Disciplina> listaDisciplinas;
     private List<Usuario> listaUsuarios;
 
+    // Método chamado após a construção do bean para inicializar as listas de salas, disciplinas e usuários
     @PostConstruct
     public void init() {
         listaSalas = salaDao.listar();
@@ -48,7 +51,9 @@ public class AlocacaoBean implements Serializable{
         listaUsuarios = usuarioDao.listar();
     }
 
+    // Método chamado ao submeter o formulário de alocação para salvar a alocação no banco de dados
     public String salvarAlocacao() {
+        // Tenta realizar a alocação chamando o serviço de cadastro e captura qualquer exceção lançada
         try{
             cadastroService.realizarAlocacao(alocacao);
             this.alocacao = new Alocacao();
@@ -59,6 +64,7 @@ public class AlocacaoBean implements Serializable{
         return null; 
     }
 
+    // Getters e Setters para o objeto de alocação e as listas de salas, disciplinas e usuários
     public Alocacao getAlocacao() { return alocacao; }
     public void setAlocacao(Alocacao alocacao) { this.alocacao = alocacao; }
     

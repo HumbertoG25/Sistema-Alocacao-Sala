@@ -16,7 +16,9 @@ public class AlocacaoDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // Busca todas as alocações detalhadas de um usuário específico, ordenadas por dia da semana e horário
     public List<AlocacaoDetalhe> buscaPorUsuario(Long idUsuario) {
+        //comando SQL para a busca no banco de dados, utilizando JOINs para obter informações detalhadas sobre a alocação
         String sql = """
                 SELECT a.id, d.nome AS disciplina, a.horario, a.dia_semana,
                        s.bloco, s.nome AS sala, s.tipo AS tipo_sala
@@ -34,7 +36,8 @@ public class AlocacaoDao {
                     ELSE 7
                 END, a.horario
                 """;
-
+        
+        // Executa a consulta SQL e mapeia os resultados para objetos AlocacaoDetalhe
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             AlocacaoDetalhe alocacao = new AlocacaoDetalhe();
             alocacao.setId(rs.getLong("id"));
@@ -48,6 +51,7 @@ public class AlocacaoDao {
         }, idUsuario);
     }
 
+    // Insere uma nova alocação no banco de dados
     public void inserir(Alocacao alocacao) {
         String sql = "INSERT INTO alocacoes (usuario_id, sala_id, disciplina_id, horario, dia_semana) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, 
@@ -59,12 +63,16 @@ public class AlocacaoDao {
         );
     }
 
+    // deleta uma alocação do banco de dados com base no ID fornecido
     public void deletar(Long id) {
         String sql = "DELETE FROM alocacoes WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 
+    // Lista todas as alocações com detalhes, incluindo informações sobre o usuário, sala e disciplina
     public List<Alocacao> listar() {
+
+        // Comando SQL para busca no banco da dados
         String sql = "SELECT a.id, a.dia_semana, a.horario, " +
                  "       u.nome AS usuario_nome, u.perfil_id, " +
                  "       s.nome AS sala_nome, s.tipo AS sala_tipo, " +
@@ -74,14 +82,17 @@ public class AlocacaoDao {
                  "JOIN salas s ON a.sala_id = s.id " +
                  "JOIN disciplinas d ON a.disciplina_id = d.id";
 
+        // Executa a consulta SQL e mapeia os resultados para objetos Alocacao
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
+
             Alocacao alocacao = new Alocacao();
             alocacao.setId(rs.getLong("id"));
             alocacao.setDiaSemana(rs.getString("dia_semana"));
             alocacao.setHorario(rs.getString("horario"));
             
             alocacao.setUsuarioNome(rs.getString("usuario_nome"));
-
+            
+            // Determina o tipo de usuário com base no perfil_id
             Long perfilId = rs.getLong("perfil_id");
             if (perfilId == 1) {
                 alocacao.setUsuarioTipo("Aluno");
@@ -99,13 +110,25 @@ public class AlocacaoDao {
         });
     }
 
+    // Verifica se existe um conflito de horário para uma determinada sala e usuário em um dia e horário específicos
     public boolean existeConflitoHorario(Long salaId, Long usuarioId, String diaSemana, String horario) {
+
+        // Verifica se o usuário é um professor (perfil_id = 2)
+        String sqlPerfil = "SELECT perfil_id FROM usuarios WHERE id = ?";
+        Long perfilId = jdbcTemplate.queryForObject(sqlPerfil, Long.class, usuarioId);
+
+        if (perfilId == null || perfilId != 2) { 
+            return false;
+        }
+
+        // comando SQL
         String sql = """
             SELECT COUNT(*) FROM alocacoes 
             WHERE dia_semana = ? AND horario = ? 
             AND (sala_id = ? OR usuario_id = ?)
         """;
         
+        // Executa a consulta SQL para verificar a existência de alocações conflitantes
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, diaSemana, horario, salaId, usuarioId);
         return count != null && count > 0;
     }

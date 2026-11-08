@@ -19,11 +19,14 @@ public class AlocacaoService {
         this.alocacaoDao = alocacaoDao;
     }
 
+    // Busca todas as alocações de um usuário específico
     public List<AlocacaoDetalhe> buscarPorUsuario(Long idUsuario) {
+        // Se o ID do usuário for nulo, retorna uma lista vazia
         if (idUsuario == null) {
             return Collections.emptyList();
         }
 
+        // Tenta buscar as alocações do usuário no banco de dados, lidando com possíveis exceções de acesso a dados
         try {
             return alocacaoDao.buscaPorUsuario(idUsuario);
         } catch (DataAccessException e) {
@@ -31,10 +34,12 @@ public class AlocacaoService {
         }
     }
 
+    // Insere uma nova alocação no banco de dados
     public List<AlocacaoDetalhe> buscarAulasDeHoje(Long idUsuario) {
         return buscarPorDia(idUsuario, LocalDate.now().getDayOfWeek());
     }
 
+    // Busca todas as alocações de um usuário específico em um dia da semana específico
     public List<AlocacaoDetalhe> buscarPorDia(Long idUsuario, DayOfWeek dia) {
         String diaSemana = nomeDoDia(dia);
         return buscarPorUsuario(idUsuario).stream()
@@ -42,6 +47,7 @@ public class AlocacaoService {
                 .toList();
     }
 
+    // Converte o enum DayOfWeek para o nome correspondente do dia da semana em português
     private String nomeDoDia(DayOfWeek dia) {
         return switch (dia) {
             case MONDAY -> "Segunda-feira";

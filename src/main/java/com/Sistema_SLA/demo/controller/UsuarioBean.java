@@ -14,12 +14,15 @@ import jakarta.inject.Named;
 @ViewScoped
 public class UsuarioBean {
     
+    // Service responsável por cadastrar usuários no sistema
     @Autowired
     private CadastroService cadastroService;
 
     private Usuario usuario = new Usuario();
 
+    // Método chamado ao submeter o formulário de cadastro de usuário para salvar o usuário no banco de dados
     public String salvarUsuario() {
+        // Tenta cadastrar o usuário chamando o serviço de cadastro e captura qualquer exceção lançada
         try{
             cadastroService.cadastrarUsuario(usuario);
             this.usuario = new Usuario();
@@ -30,6 +33,7 @@ public class UsuarioBean {
         return null;
     }
 
+    // Getters e Setters para o objeto de usuário
     public Usuario getUsuario() { return usuario; }
     public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 }

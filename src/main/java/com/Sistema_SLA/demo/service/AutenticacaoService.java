@@ -16,11 +16,15 @@ public class AutenticacaoService {
         this.usuarioDao = usuarioDao;
     }
 
+    // Autentica um usuário com base no email e senha fornecidos
     public Optional<Usuario> autenticar(String email, String senha) {
+
+        // Verifica se o email e a senha são válidos (não nulos e não em branco)
         if (email == null || email.isBlank() || senha == null || senha.isBlank()) {
             return Optional.empty();
         }
 
+        // Tenta buscar o usuário pelo email e compara a senha fornecida com a senha armazenada no banco de dados
         try {
             return usuarioDao.buscaEmail(email.trim())
                     .filter(usuario -> usuario.getSenha().equals(senha));

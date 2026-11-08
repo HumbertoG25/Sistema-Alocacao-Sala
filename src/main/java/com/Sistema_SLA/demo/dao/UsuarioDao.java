@@ -16,7 +16,9 @@ public class UsuarioDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    // Busca um usuário pelo email no banco de dados
     public Optional<Usuario> buscaEmail(String email) {
+        // comando SQL para buscar o usuário pelo email
         String sql = """
                 SELECT u.id, u.nome, u.email, u.senha, u.perfil_id, p.nome AS perfil
                 FROM usuarios u
@@ -24,6 +26,7 @@ public class UsuarioDao {
                 WHERE LOWER(u.email) = LOWER(?)
                 """;
 
+        // Executa a consulta SQL e mapeia o resultado para um objeto Usuario, retornando um Optional
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Usuario usuario = new Usuario();
             usuario.setId(rs.getLong("id"));
@@ -36,6 +39,7 @@ public class UsuarioDao {
         }, email).stream().findFirst();
     }
 
+    // Insere um novo usuário no banco de dados
     public void inserir(Usuario usuario) {
         String sql = "INSERT INTO usuarios (nome, email, senha, perfil_id) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, 
@@ -46,6 +50,7 @@ public class UsuarioDao {
         );
     }
 
+    // Lista todos os usuários do banco de dados
     public List<Usuario> listar() {
         String sql = "SELECT id, nome, email, senha, perfil_id FROM usuarios";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
@@ -59,6 +64,7 @@ public class UsuarioDao {
         });
     }
 
+    // Deleta um usuário do banco de dados com base no ID fornecido
     public void deletar(Long id) {
         String sql = "DELETE FROM usuariosS WHERE id = ?";
         jdbcTemplate.update(sql, id);

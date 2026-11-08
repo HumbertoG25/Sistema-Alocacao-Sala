@@ -14,11 +14,13 @@ public class DisciplinaDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    // Insere uma nova disciplina no banco de dados
     public void inserir(Disciplina disciplina) {
         String sql = "INSERT INTO disciplinas (nome) VALUES (?, ?)";
         jdbcTemplate.update(sql, disciplina.getNome());
     }
 
+    // Lista todas as disciplinas do banco de dados
     public List<Disciplina> listar() {
         String sql = "SELECT id, nome FROM disciplinas";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
@@ -29,6 +31,7 @@ public class DisciplinaDao {
         });
     }
 
+    // Deleta uma disciplina do banco de dados com base no ID fornecido
     public void deletar(Long id) {
         String sql = "DELETE FROM disciplinas WHERE id = ?";
         jdbcTemplate.update(sql, id);

@@ -14,11 +14,13 @@ public class SalaDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    // Insere uma nova sala no banco de dados
     public void inserir(Sala sala) {
         String sql = "INSERT INTO salas (nome, tipo, bloco) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, sala.getNome(), sala.getTipo(), sala.getBloco());
     }
 
+    // Lista todas as salas do banco de dados
     public List<Sala> listar() {
         String sql = "SELECT id, nome, bloco, tipo FROM salas";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
@@ -31,6 +33,7 @@ public class SalaDao {
         });
     }
 
+    // Deleta uma sala do banco de dados com base no ID fornecido
     public void deletar(Long id) {
         String sql = "DELETE FROM salas WHERE id = ?";
         jdbcTemplate.update(sql, id);
