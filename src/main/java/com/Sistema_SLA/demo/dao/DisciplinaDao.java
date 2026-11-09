@@ -16,7 +16,7 @@ public class DisciplinaDao {
 
     // Insere uma nova disciplina no banco de dados
     public void inserir(Disciplina disciplina) {
-        String sql = "INSERT INTO disciplinas (nome) VALUES (?, ?)";
+        String sql = "INSERT INTO disciplinas (nome) VALUES (?)";
         jdbcTemplate.update(sql, disciplina.getNome());
     }
 

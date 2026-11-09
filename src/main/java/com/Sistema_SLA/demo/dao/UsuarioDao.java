@@ -66,7 +66,7 @@ public class UsuarioDao {
 
     // Deleta um usuário do banco de dados com base no ID fornecido
     public void deletar(Long id) {
-        String sql = "DELETE FROM usuariosS WHERE id = ?";
+        String sql = "DELETE FROM usuarios WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 }

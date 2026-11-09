@@ -34,7 +34,7 @@ public class AlocacaoService {
         }
     }
 
-    // Insere uma nova alocação no banco de dados
+    // busca todas as aulas de hoje de um usuário específico
     public List<AlocacaoDetalhe> buscarAulasDeHoje(Long idUsuario) {
         return buscarPorDia(idUsuario, LocalDate.now().getDayOfWeek());
     }
