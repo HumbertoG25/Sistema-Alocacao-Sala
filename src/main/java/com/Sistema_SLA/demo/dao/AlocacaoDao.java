@@ -117,11 +117,15 @@ public class AlocacaoDao {
         String sqlPerfil = "SELECT perfil_id FROM usuarios WHERE id = ?";
         Long perfilId = jdbcTemplate.queryForObject(sqlPerfil, Long.class, usuarioId);
 
+        // Se o usuário não for um professor, não há conflito de horário
         if (perfilId == null || perfilId != 2) { 
             return false;
         }
 
-        // comando SQL
+        //obs 'perfilId == null' é a blindagem para o código não quebrar caso o banco retorne um valor nulo para aquele usuário
+        // enquanto 'perfilId != 2' É a regra de negócio principal
+
+        // comando SQL para verificar se já existe uma alocação para a mesma sala ou usuário no mesmo dia e horário
         String sql = """
             SELECT COUNT(*) FROM alocacoes 
             WHERE dia_semana = ? AND horario = ? 
