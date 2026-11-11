@@ -12,8 +12,12 @@
         <header class="topo">
             <div class="container topo-conteudo">
                 <div class="marca">
-                    <span class="marca-simbolo">SLA</span>
-                    <span>Painel Administrativo</span>
+                    <h:graphicImage library="imgs" name="Horizontal-Letra-Branca.png" styleClass="logo-topo" alt="Logo UNICEPLAC" />
+                    <span class="divisor-topo">|</span>
+                    <div class="marca-texto">
+                        <span class="marca-simbolo">SLA</span>
+                        <span class="marca-nome">Painel Administrativo</span>
+                    </div>
                 </div>
                 <div class="usuario-topo">
                     <div class="usuario-texto">
@@ -32,55 +36,58 @@
             <div class="boas-vindas">
                 <div>
                     <span class="etiqueta etiqueta-verde">Módulo de Vínculos</span>
-                    <h1>Realizar Nova Alocação</h1>
-                    <p>Vincule um usuário (aluno ou professor) a uma sala e disciplina para o respectivo horário e dia da semana.</p>
+                    <h1>Alocação Acadêmica</h1>
+                    <p>Cadastre novos vínculos e gerencie as alocações ativas do campus.</p>
                 </div>
                 <div>
                     <h:link value="← Voltar ao Menu" outcome="/menu.xhtml" styleClass="botao-sair" style="text-decoration: none; display: inline-block; text-align: center; line-height: normal;" />
                 </div>
             </div>
 
+            <!-- FORMULÁRIO DE CADASTRO -->
             <div class="tabela-area" style="padding: 35px; max-width: 650px; margin: 0 auto;">
                 <div class="tabela-cabecalho" style="padding: 0 0 20px 0;">
-                    <h2>Formulário de Alocação</h2>
+                    <h2>Nova Alocação</h2>
                     <span>Preencha os campos abaixo</span>
                 </div>
 
                 <h:form id="formAlocacao" styleClass="formulario">
-                    <h:messages globalOnly="true" styleClass="mensagem-erro"/>
+                    <h:messages globalOnly="true" infoClass="mensagem-sucesso" errorClass="mensagem-erro" styleClass="mensagem-painel"/>
 
                     <div class="campo">
-                        <h:outputLabel value="Usuário (Aluno / Professor):" />
-                        <h:selectOneMenu value="#{alocacaoBean.alocacao.usuarioId}" required="true" requiredMessage="Selecione o usuário." styleClass="campo input" style="height: 50px;">
+                        <h:outputLabel for="usuario" value="Usuário (Aluno / Professor):" />
+                        <h:selectOneMenu id="usuario" value="#{alocacaoBean.alocacao.usuarioId}" required="true" requiredMessage="Selecione o usuário.">
                             <f:selectItem itemLabel="Selecione o usuário..." itemValue="" />
                             <f:selectItems value="#{alocacaoBean.listaUsuarios}" var="u" 
                                            itemValue="#{u.id}" itemLabel="#{u.nome} (ID: #{u.id})" />
                         </h:selectOneMenu>
-                        <h:message for="" styleClass="erro-campo"/>
+                        <h:message for="usuario" styleClass="erro-campo"/>
                     </div>
 
                     <div class="campo">
-                        <h:outputLabel value="Sala:" />
-                        <h:selectOneMenu value="#{alocacaoBean.alocacao.salaId}" required="true" requiredMessage="Selecione a sala." styleClass="campo input" style="height: 50px;">
+                        <h:outputLabel for="sala" value="Sala:" />
+                        <h:selectOneMenu id="sala" value="#{alocacaoBean.alocacao.salaId}" required="true" requiredMessage="Selecione a sala.">
                             <f:selectItem itemLabel="Selecione a sala..." itemValue="" />
                             <f:selectItems value="#{alocacaoBean.listaSalas}" var="s" 
                                            itemValue="#{s.id}" itemLabel="#{s.nome} - #{s.bloco} (#{s.tipo})" />
                         </h:selectOneMenu>
+                        <h:message for="sala" styleClass="erro-campo"/>
                     </div>
 
                     <div class="campo">
-                        <h:outputLabel value="Disciplina:" />
-                        <h:selectOneMenu value="#{alocacaoBean.alocacao.disciplinaId}" required="true" requiredMessage="Selecione a disciplina." styleClass="campo input" style="height: 50px;">
+                        <h:outputLabel for="disciplina" value="Disciplina:" />
+                        <h:selectOneMenu id="disciplina" value="#{alocacaoBean.alocacao.disciplinaId}" required="true" requiredMessage="Selecione a disciplina.">
                             <f:selectItem itemLabel="Selecione a disciplina..." itemValue="" />
                             <f:selectItems value="#{alocacaoBean.listaDisciplinas}" var="d" 
                                            itemValue="#{d.id}" itemLabel="#{d.nome}" />
                         </h:selectOneMenu>
+                        <h:message for="disciplina" styleClass="erro-campo"/>
                     </div>
 
                     <!-- Dia da Semana -->
                     <div class="campo">
-                        <h:outputLabel value="Dia da Semana:" />
-                        <h:selectOneMenu value="#{alocacaoBean.alocacao.diaSemana}" required="true" requiredMessage="Selecione o dia da semana." styleClass="campo input" style="height: 50px;">
+                        <h:outputLabel for="diaSemana" value="Dia da Semana:" />
+                        <h:selectOneMenu id="diaSemana" value="#{alocacaoBean.alocacao.diaSemana}" required="true" requiredMessage="Selecione o dia da semana.">
                             <f:selectItem itemLabel="Selecione o dia da semana..." itemValue="" />
                             <f:selectItem itemLabel="Segunda-feira" itemValue="Segunda-feira" />
                             <f:selectItem itemLabel="Terça-feira" itemValue="Terça-feira" />
@@ -90,20 +97,66 @@
                             <f:selectItem itemLabel="Sábado" itemValue="Sábado" />
                             <f:selectItem itemLabel="Domingo" itemValue="Domingo" />
                         </h:selectOneMenu>
+                        <h:message for="diaSemana" styleClass="erro-campo"/>
                     </div>
 
-                    <!-- Horário (Agora com opções fixas em <h:selectOneMenu>) -->
+                    <!-- Horário -->
                     <div class="campo">
-                        <h:outputLabel value="Horário:" />
-                        <h:selectOneMenu value="#{alocacaoBean.alocacao.horario}" required="true" requiredMessage="Selecione o horário." styleClass="campo input" style="height: 50px;">
+                        <h:outputLabel for="horario" value="Horário:" />
+                        <h:selectOneMenu id="horario" value="#{alocacaoBean.alocacao.horario}" required="true" requiredMessage="Selecione o horário.">
                             <f:selectItem itemLabel="Selecione o horário..." itemValue="" />
                             <f:selectItem itemLabel="08:00 - 12:00" itemValue="08:00 - 12:00" />
                             <f:selectItem itemLabel="14:00 - 16:00" itemValue="14:00 - 16:00" />
                             <f:selectItem itemLabel="19:00 - 22:30" itemValue="19:00 - 22:30" />
                         </h:selectOneMenu>
+                        <h:message for="horario" styleClass="erro-campo"/>
                     </div>
 
                     <h:commandButton value="Salvar Alocação" action="#{alocacaoBean.salvarAlocacao}" styleClass="botao botao-principal" style="width: 100%; margin-top: 10px;" />
+                </h:form>
+            </div>
+
+            <!-- LISTAGEM E GERENCIAMENTO DE ALOCAÇÕES ATIVAS (Vindo da página delete) -->
+            <div class="tabela-area" style="margin-top: 40px;">
+                <div class="tabela-cabecalho">
+                    <h2>Alocações Ativas</h2>
+                    <span>#{alocacaoBean.alocacoes.size()} registro(s)</span>
+                </div>
+                <h:form id="formAlocacoes" styleClass="tabela-responsiva">
+                    <h:dataTable value="#{alocacaoBean.alocacoes}" var="a" styleClass="tabela-alocacoes">
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                            #{a.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Usuário</f:facet>
+                            <strong>#{a.usuarioNome}</strong> 
+                            <small style="color: var(--cor-texto-claro); display: block;">(#{a.usuarioTipo})</small>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Sala</f:facet>
+                            #{a.salaNome}
+                            <small style="color: var(--cor-texto-claro); display: block;">(#{a.salaTipo})</small>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Disciplina</f:facet>
+                            #{a.disciplinaNome}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Dia</f:facet>
+                            #{a.diaSemana}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Horário</f:facet>
+                            #{a.horario}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Ação</f:facet>
+                            <h:commandButton value="Excluir" action="#{alocacaoBean.excluirAlocacao(a.id)}" 
+                                             styleClass="botao-excluir" 
+                                             onclick="return confirm('Deseja realmente excluir esta alocação?');" />
+                        </h:column>
+                    </h:dataTable>
                 </h:form>
             </div>
         </main>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>SLA - Cadastro de Disciplina</title>
+        <title>SLA - Gerenciamento de Disciplinas</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="estilo.css"/>
     </h:head>
@@ -11,8 +12,12 @@
         <header class="topo">
             <div class="container topo-conteudo">
                 <div class="marca">
-                    <span class="marca-simbolo">SLA</span>
-                    <span>Painel Administrativo</span>
+                    <h:graphicImage library="imgs" name="Horizontal-Letra-Branca.png" styleClass="logo-topo" alt="Logo UNICEPLAC" />
+                    <span class="divisor-topo">|</span>
+                    <div class="marca-texto">
+                        <span class="marca-simbolo">SLA</span>
+                        <span class="marca-nome">Painel Administrativo</span>
+                    </div>
                 </div>
                 <div class="usuario-topo">
                     <div class="usuario-texto">
@@ -31,29 +36,57 @@
             <div class="boas-vindas">
                 <div>
                     <span class="etiqueta etiqueta-verde">Módulo de Cadastros</span>
-                    <h1>Cadastrar Nova Disciplina</h1>
-                    <p>Adicione uma nova disciplina ao sistema para que ela fique disponível nas alocações acadêmicas.</p>
+                    <h1>Gerenciamento de Disciplinas</h1>
+                    <p>Adicione novas disciplinas ou gerencie as matérias disponíveis para alocação.</p>
                 </div>
                 <div>
                     <h:link value="← Voltar ao Menu" outcome="/menu.xhtml" styleClass="botao-sair" style="text-decoration: none; display: inline-block; text-align: center; line-height: normal;" />
                 </div>
             </div>
 
+            <!-- FORMULÁRIO DA DISCIPLINA -->
             <div class="tabela-area" style="padding: 35px; max-width: 600px; margin: 0 auto;">
                 <div class="tabela-cabecalho" style="padding: 0 0 20px 0;">
-                    <h2>Formulário da Disciplina</h2>
+                    <h2>Nova Disciplina</h2>
                     <span>Preencha os dados</span>
                 </div>
 
                 <h:form id="formDisciplina" styleClass="formulario">
-                    <h:messages globalOnly="true" styleClass="mensagem-erro"/>
+                    <h:messages globalOnly="true" infoClass="mensagem-sucesso" errorClass="mensagem-erro" styleClass="mensagem-painel"/>
 
                     <div class="campo">
-                        <h:outputLabel value="Nome da Disciplina:" />
-                        <h:inputText value="#{disciplinaBean.disciplina.nome}" required="true" requiredMessage="Informe o nome da disciplina." autocomplete="off"/>
+                        <h:outputLabel for="nome" value="Nome da Disciplina:" />
+                        <h:inputText id="nome" value="#{disciplinaBean.disciplina.nome}" required="true" requiredMessage="Informe o nome da disciplina." autocomplete="off"/>
+                        <h:message for="nome" styleClass="erro-campo"/>
                     </div>
 
                     <h:commandButton value="Salvar Disciplina" action="#{disciplinaBean.salvarDisciplina}" styleClass="botao botao-principal" style="width: 100%; margin-top: 10px;" />
+                </h:form>
+            </div>
+
+            <!-- LISTAGEM E GERENCIAMENTO DE DISCIPLINAS (Migrada da página delete) -->
+            <div class="tabela-area" style="margin-top: 40px;">
+                <div class="tabela-cabecalho">
+                    <h2>Disciplinas Cadastradas</h2>
+                    <span>#{disciplinaBean.disciplinas.size()} registro(s)</span>
+                </div>
+                <h:form id="formDisciplinas" styleClass="tabela-responsiva">
+                    <h:dataTable value="#{disciplinaBean.disciplinas}" var="d" styleClass="tabela-alocacoes">
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                            #{d.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Nome</f:facet>
+                            <strong>#{d.nome}</strong>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Ação</f:facet>
+                            <h:commandButton value="Excluir" action="#{disciplinaBean.excluirDisciplina(d.id)}" 
+                                             styleClass="botao-excluir" 
+                                             onclick="return confirm('Deseja realmente excluir esta disciplina?');" />
+                        </h:column>
+                    </h:dataTable>
                 </h:form>
             </div>
         </main>

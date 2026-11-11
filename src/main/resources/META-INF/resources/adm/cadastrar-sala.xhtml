@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>SLA - Cadastro de Sala</title>
+        <title>SLA - Gerenciamento de Salas</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="estilo.css"/>
     </h:head>
@@ -12,8 +12,12 @@
         <header class="topo">
             <div class="container topo-conteudo">
                 <div class="marca">
-                    <span class="marca-simbolo">SLA</span>
-                    <span>Painel Administrativo</span>
+                    <h:graphicImage library="imgs" name="Horizontal-Letra-Branca.png" styleClass="logo-topo" alt="Logo UNICEPLAC" />
+                    <span class="divisor-topo">|</span>
+                    <div class="marca-texto">
+                        <span class="marca-simbolo">SLA</span>
+                        <span class="marca-nome">Painel Administrativo</span>
+                    </div>
                 </div>
                 <div class="usuario-topo">
                     <div class="usuario-texto">
@@ -32,44 +36,82 @@
             <div class="boas-vindas">
                 <div>
                     <span class="etiqueta etiqueta-verde">Módulo de Cadastros</span>
-                    <h1>Cadastrar Nova Sala</h1>
-                    <p>Adicione uma nova sala teórica ou laboratório ao campus para habilitá-la nas alocações.</p>
+                    <h1>Gerenciamento de Salas</h1>
+                    <p>Adicione novas salas teóricas ou laboratórios e gerencie as salas ativas do campus.</p>
                 </div>
                 <div>
                     <h:link value="← Voltar ao Menu" outcome="/menu.xhtml" styleClass="botao-sair" style="text-decoration: none; display: inline-block; text-align: center; line-height: normal;" />
                 </div>
             </div>
 
+            <!-- FORMULÁRIO DA SALA -->
             <div class="tabela-area" style="padding: 35px; max-width: 600px; margin: 0 auto;">
                 <div class="tabela-cabecalho" style="padding: 0 0 20px 0;">
-                    <h2>Formulário da Sala</h2>
-                    <span>Preencha os dados</span>
+                    <h2>Nova Sala</h2>
+                    <span>Preencha os dados do ambiente</span>
                 </div>
 
                 <h:form id="formSala" styleClass="formulario">
-                    <h:messages globalOnly="true" styleClass="mensagem-erro"/>
+                    <h:messages globalOnly="true" infoClass="mensagem-sucesso" errorClass="mensagem-erro" styleClass="mensagem-painel"/>
 
                     <div class="campo">
-                        <h:outputLabel value="Nome/Número da Sala:" />
-                        <h:inputText value="#{salaBean.sala.nome}" required="true" requiredMessage="Informe o nome da sala." autocomplete="off"/>
+                        <h:outputLabel for="nome" value="Nome/Número da Sala:" />
+                        <h:inputText id="nome" value="#{salaBean.sala.nome}" required="true" requiredMessage="Informe o nome da sala." autocomplete="off"/>
+                        <h:message for="nome" styleClass="erro-campo"/>
                     </div>
 
                     <!-- Tipo da Sala com <h:selectOneMenu> -->
                     <div class="campo">
-                        <h:outputLabel value="Tipo da Sala:" />
-                        <h:selectOneMenu value="#{salaBean.sala.tipo}" required="true" requiredMessage="Selecione o tipo da sala." styleClass="campo input" style="height: 50px;">
+                        <h:outputLabel for="tipo" value="Tipo da Sala:" />
+                        <h:selectOneMenu id="tipo" value="#{salaBean.sala.tipo}" required="true" requiredMessage="Selecione o tipo da sala.">
                             <f:selectItem itemLabel="Selecione o tipo..." itemValue="" />
                             <f:selectItem itemLabel="Teórica" itemValue="Teórica" />
                             <f:selectItem itemLabel="Prática" itemValue="Prática" />
                         </h:selectOneMenu>
+                        <h:message for="tipo" styleClass="erro-campo"/>
                     </div>
 
                     <div class="campo">
-                        <h:outputLabel value="Bloco (Ex: Bloco A):" />
-                        <h:inputText value="#{salaBean.sala.bloco}" required="true" requiredMessage="Informe o bloco." autocomplete="off"/>
+                        <h:outputLabel for="bloco" value="Bloco (Ex: Bloco A):" />
+                        <h:inputText id="bloco" value="#{salaBean.sala.bloco}" required="true" requiredMessage="Informe o bloco." autocomplete="off"/>
+                        <h:message for="bloco" styleClass="erro-campo"/>
                     </div>
 
                     <h:commandButton value="Salvar Sala" action="#{salaBean.salvarSala}" styleClass="botao botao-principal" style="width: 100%; margin-top: 10px;" />
+                </h:form>
+            </div>
+
+            <!-- LISTAGEM E GERENCIAMENTO DE SALAS (Migrada da página delete) -->
+            <div class="tabela-area" style="margin-top: 40px;">
+                <div class="tabela-cabecalho">
+                    <h2>Salas Cadastradas</h2>
+                    <span>#{salaBean.salas.size()} registro(s)</span>
+                </div>
+                <h:form id="formSalas" styleClass="tabela-responsiva">
+                    <h:dataTable value="#{salaBean.salas}" var="s" styleClass="tabela-alocacoes">
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                            #{s.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Nome</f:facet>
+                            <strong>#{s.nome}</strong>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Bloco</f:facet>
+                            #{s.bloco}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Tipo</f:facet>
+                            <span class="tipo-aula">#{s.tipo}</span>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Ação</f:facet>
+                            <h:commandButton value="Excluir" action="#{salaBean.excluirSala(s.id)}" 
+                                             styleClass="botao-excluir" 
+                                             onclick="return confirm('Deseja realmente excluir esta sala?');" />
+                        </h:column>
+                    </h:dataTable>
                 </h:form>
             </div>
         </main>

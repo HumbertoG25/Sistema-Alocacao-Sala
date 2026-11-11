@@ -69,6 +69,25 @@ public class AlocacaoDao {
         jdbcTemplate.update(sql, id);
     }
 
+    // Verifica se um usuário possui alguma alocação ativa no banco de dados
+    public boolean existeAlocacaoPorUsuario(Long usuarioId) {
+        String sql = "SELECT COUNT(*) FROM alocacoes WHERE usuario_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, usuarioId);
+        return count != null && count > 0;
+    }
+
+    public boolean existeAlocacaoPorSala(Long salaId) {
+        String sql = "SELECT COUNT(*) FROM alocacoes WHERE sala_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, salaId);
+        return count != null && count > 0;
+    }
+
+    public boolean existeAlocacaoPorDisciplina(Long disciplinaId){
+        String sql = "SELECT COUNT(*) FROM alocacoes WHERE disciplina_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, disciplinaId);
+        return count != null && count > 0;
+    }
+
     // Lista todas as alocações com detalhes, incluindo informações sobre o usuário, sala e disciplina
     public List<Alocacao> listar() {
 

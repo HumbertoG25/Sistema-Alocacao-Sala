@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
 <h:head>
     <title>Entrar | Sistema SLA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- O nome do arquivo CSS criado acima deve corresponder aqui -->
     <h:outputStylesheet library="css" name="estilo.css"/>
 </h:head>
 <h:body styleClass="pagina-login">
     <main class="login-layout">
+        
+        <!-- Painel esquerdo com a identidade institucional da UNICEPLAC -->
         <section class="login-apresentacao">
             <div class="marca marca-clara">
-                <span class="marca-simbolo">SLA</span>
-                <span>Sistema de Localização Acadêmica</span>
+                <h:graphicImage library="imgs" name="Horizontal-Letra-Branca.png" styleClass="logo-universidade" alt="Logo UNICEPLAC" />
+                <div class="marca-texto">
+                    <span class="marca-simbolo">SLA</span>
+                    <span>Sistema de Localização Acadêmica</span>
+                </div>
             </div>
             <div class="apresentacao-conteudo">
                 <span class="etiqueta">Campus conectado</span>
@@ -22,10 +29,10 @@
             <p class="apresentacao-rodape">UNICEPLAC · Portal Acadêmico</p>
         </section>
 
+        <!-- Painel direito com o formulário -->
         <section class="login-area">
             <div class="login-card">
                 <div class="login-cabecalho">
-                    <span class="icone-login">→</span>
                     <h2>Bem-vindo</h2>
                     <p>Use seus dados acadêmicos para acessar.</p>
                 </div>

@@ -35,6 +35,9 @@ public class AlocacaoBean implements Serializable{
     @Autowired
     private UsuarioDao usuarioDao;
 
+    @Autowired
+    private AlocacaoDao alocacaoDao;
+
     // Objeto de alocação que será preenchido com os dados do formulário
     private Alocacao alocacao = new Alocacao();
     
@@ -43,12 +46,21 @@ public class AlocacaoBean implements Serializable{
     private List<Disciplina> listaDisciplinas;
     private List<Usuario> listaUsuarios;
 
-    // Método chamado após a construção do bean para inicializar as listas de salas, disciplinas e usuários
+    // Lista de todas as alocações cadastradas (transferida do deleteBean para gerenciamento nesta tela)
+    private List<Alocacao> alocacoes;
+
+    // Método chamado após a construção do bean para inicializar as listas de salas, disciplinas, usuários e alocações
     @PostConstruct
     public void init() {
         listaSalas = salaDao.listar();
         listaDisciplinas = disciplinaDao.listar();
         listaUsuarios = usuarioDao.listar();
+        carregarAlocacoes();
+    }
+
+    // Carrega a lista atualizada de alocações ativas
+    public void carregarAlocacoes() {
+        this.alocacoes = alocacaoDao.listar();
     }
 
     // Método chamado ao submeter o formulário de alocação para salvar a alocação no banco de dados
@@ -57,6 +69,9 @@ public class AlocacaoBean implements Serializable{
         try{
             cadastroService.realizarAlocacao(alocacao);
             this.alocacao = new Alocacao();
+            carregarAlocacoes();
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso:", "Alocação realizada com sucesso!"));
         } catch (RuntimeException e){
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atenção:", e.getMessage()));
@@ -64,11 +79,18 @@ public class AlocacaoBean implements Serializable{
         return null; 
     }
 
-    // Getters e Setters para o objeto de alocação e as listas de salas, disciplinas e usuários
+    // Exclui uma alocação pelo ID e recarrega a listagem
+    public void excluirAlocacao(Long id) {   
+        cadastroService.excluirAlocacao(id);
+        carregarAlocacoes();
+    }
+
+    // Getters e Setters para o objeto de alocação e as listas de salas, disciplinas, usuários e alocações
     public Alocacao getAlocacao() { return alocacao; }
     public void setAlocacao(Alocacao alocacao) { this.alocacao = alocacao; }
     
     public List<Sala> getListaSalas() { return listaSalas; }
     public List<Disciplina> getListaDisciplinas() { return listaDisciplinas; }
     public List<Usuario> getListaUsuarios() { return listaUsuarios; }
+    public List<Alocacao> getAlocacoes() { return alocacoes; }
 }

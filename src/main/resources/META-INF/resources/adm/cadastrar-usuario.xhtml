@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>SLA - Cadastro de Usuário</title>
+        <title>SLA - Gerenciamento de Usuários</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="estilo.css"/>
     </h:head>
@@ -12,8 +12,12 @@
         <header class="topo">
             <div class="container topo-conteudo">
                 <div class="marca">
-                    <span class="marca-simbolo">SLA</span>
-                    <span>Painel Administrativo</span>
+                    <h:graphicImage library="imgs" name="Horizontal-Letra-Branca.png" styleClass="logo-topo" alt="Logo UNICEPLAC" />
+                    <span class="divisor-topo">|</span>
+                    <div class="marca-texto">
+                        <span class="marca-simbolo">SLA</span>
+                        <span class="marca-nome">Painel Administrativo</span>
+                    </div>
                 </div>
                 <div class="usuario-topo">
                     <div class="usuario-texto">
@@ -32,50 +36,90 @@
             <div class="boas-vindas">
                 <div>
                     <span class="etiqueta etiqueta-verde">Módulo de Cadastros</span>
-                    <h1>Cadastrar Aluno / Professor</h1>
-                    <p>Adicione um novo usuário ao sistema informando seus dados de acesso e perfil correspondente.</p>
+                    <h1>Gerenciamento de Usuários</h1>
+                    <p>Adicione novos usuários ou gerencie os acessos ativos no sistema.</p>
                 </div>
                 <div>
                     <h:link value="← Voltar ao Menu" outcome="/menu.xhtml" styleClass="botao-sair" style="text-decoration: none; display: inline-block; text-align: center; line-height: normal;" />
                 </div>
             </div>
 
+            <!-- FORMULÁRIO DO USUÁRIO -->
             <div class="tabela-area" style="padding: 35px; max-width: 600px; margin: 0 auto;">
                 <div class="tabela-cabecalho" style="padding: 0 0 20px 0;">
-                    <h2>Formulário do Usuário</h2>
-                    <span>Preencha os dados</span>
+                    <h2>Novo Usuário</h2>
+                    <span>Preencha os dados de acesso</span>
                 </div>
 
                 <h:form id="formUsuario" styleClass="formulario">
-                        <h:messages globalOnly="false" showSummary="true" showDetail="true" 
-                            styleClass="mensagem-sistema" 
-                            style="color: var(--erro, #d9534f); margin-bottom: 20px; list-style: none; padding: 0; font-size: 14px; font-weight: 500;" />
+                    <h:messages globalOnly="true" infoClass="mensagem-sucesso" errorClass="mensagem-erro" styleClass="mensagem-painel" />
+
                     <div class="campo">
-                        <h:outputLabel value="Nome Completo:" />
-                        <h:inputText value="#{usuarioBean.usuario.nome}" required="true" requiredMessage="Informe o nome." autocomplete="off"/>
+                        <h:outputLabel for="nome" value="Nome Completo:" />
+                        <h:inputText id="nome" value="#{usuarioBean.usuario.nome}" required="true" requiredMessage="Informe o nome completo." autocomplete="off"/>
+                        <h:message for="nome" styleClass="erro-campo"/>
                     </div>
 
                     <div class="campo">
-                        <h:outputLabel value="E-mail Institucional:" />
-                        <h:inputText value="#{usuarioBean.usuario.email}" required="true" requiredMessage="Informe o e-mail." autocomplete="off"/>
+                        <h:outputLabel for="email" value="E-mail Institucional:" />
+                        <h:inputText id="email" value="#{usuarioBean.usuario.email}" required="true" requiredMessage="Informe o e-mail." autocomplete="off"/>
+                        <h:message for="email" styleClass="erro-campo"/>
                     </div>
 
                     <div class="campo">
-                        <h:outputLabel value="Senha de Acesso:" />
-                        <h:inputSecret value="#{usuarioBean.usuario.senha}" required="true" requiredMessage="Informe a senha." autocomplete="off"/>
+                        <h:outputLabel for="senha" value="Senha de Acesso:" />
+                        <h:inputSecret id="senha" value="#{usuarioBean.usuario.senha}" required="true" requiredMessage="Informe a senha." autocomplete="off"/>
+                        <h:message for="senha" styleClass="erro-campo"/>
                     </div>
 
                     <div class="campo">
-                        <h:outputLabel value="Perfil de Acesso:" />
-                        <h:selectOneMenu value="#{usuarioBean.usuario.perfilId}" required="true" requiredMessage="Selecione o perfil." styleClass="campo input" style="height: 50px;">
+                        <h:outputLabel for="perfil" value="Perfil de Acesso:" />
+                        <h:selectOneMenu id="perfil" value="#{usuarioBean.usuario.perfilId}" required="true" requiredMessage="Selecione o perfil.">
                             <f:selectItem itemLabel="Selecione o perfil..." itemValue="" />
                             <f:selectItem itemLabel="1 - Aluno" itemValue="1" />
                             <f:selectItem itemLabel="2 - Professor" itemValue="2" />
                             <f:selectItem itemLabel="3 - Administrador" itemValue="3" />
                         </h:selectOneMenu>
+                        <h:message for="perfil" styleClass="erro-campo"/>
                     </div>
 
                     <h:commandButton value="Salvar Usuário" action="#{usuarioBean.salvarUsuario}" styleClass="botao botao-principal" style="width: 100%; margin-top: 10px;" />
+                </h:form>
+            </div>
+
+            <!-- LISTAGEM E GERENCIAMENTO DE USUÁRIOS (Migrada da página delete) -->
+            <div class="tabela-area" style="margin-top: 40px;">
+                <div class="tabela-cabecalho">
+                    <h2>Usuários Cadastrados</h2>
+                    <span>#{usuarioBean.usuarios.size()} registro(s)</span>
+                </div>
+                <h:form id="formUsuarios" styleClass="tabela-responsiva">
+                    <h:dataTable value="#{usuarioBean.usuarios}" var="u" styleClass="tabela-alocacoes">
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                            #{u.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Nome</f:facet>
+                            <strong>#{u.nome}</strong>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">E-mail</f:facet>
+                            #{u.email}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Perfil</f:facet>
+                            <span class="tipo-aula">
+                                #{u.perfilId == 1 ? 'Aluno' : (u.perfilId == 2 ? 'Professor' : 'Administrador')}
+                            </span>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Ação</f:facet>
+                            <h:commandButton value="Excluir" action="#{usuarioBean.excluirUsuario(u.id)}" 
+                                             styleClass="botao-excluir" 
+                                             onclick="return confirm('Deseja realmente excluir este usuário?');" />
+                        </h:column>
+                    </h:dataTable>
                 </h:form>
             </div>
         </main>

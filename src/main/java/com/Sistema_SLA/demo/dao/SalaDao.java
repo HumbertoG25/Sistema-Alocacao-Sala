@@ -39,3 +39,4 @@ public class SalaDao {
         jdbcTemplate.update(sql, id);
     }
 }
+

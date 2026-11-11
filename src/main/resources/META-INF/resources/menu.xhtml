@@ -11,8 +11,12 @@
         <header class="topo">
             <div class="container topo-conteudo">
                 <div class="marca">
-                    <span class="marca-simbolo">SLA</span>
-                    <span>Painel Administrativo</span>
+                    <h:graphicImage library="imgs" name="Horizontal-Letra-Branca.png" styleClass="logo-topo" alt="Logo UNICEPLAC" />
+                    <span class="divisor-topo">|</span>
+                    <div class="marca-texto">
+                        <span class="marca-simbolo">SLA</span>
+                        <span class="marca-nome">Painel Administrativo</span>
+                    </div>
                 </div>
                 <div class="usuario-topo">
                     <div class="usuario-texto">
@@ -32,14 +36,14 @@
                 <div>
                     <span class="etiqueta etiqueta-verde">Menu Principal</span>
                     <h1>Central de Operações</h1>
-                    <p>Selecione abaixo a operação desejada para gerenciar os cadastros e alocações do campus.</p>
+                    <p>Selecione abaixo o módulo desejado para cadastrar e gerenciar os recursos acadêmicos do campus.</p>
                 </div>
             </div>
 
             <div class="tabela-area" style="padding: 35px; max-width: 700px; margin: 0 auto;">
                 <div class="tabela-cabecalho" style="padding: 0 0 20px 0;">
-                    <h2>Opções de Gerenciamento</h2>
-                    <span>Escolha um módulo</span>
+                    <h2>Módulos do Sistema</h2>
+                    <span>Escolha uma operação</span>
                 </div>
 
                 <style>
@@ -55,53 +59,48 @@
                         align-items: center;
                         justify-content: space-between;
                         padding: 18px 22px;
-                        border: 1px solid var(--borda);
-                        border-radius: 14px;
-                        background: var(--branco);
-                        color: var(--texto);
+                        border: 1px solid var(--cor-borda);
+                        border-radius: 12px;
+                        background: var(--cor-branco);
+                        color: var(--cor-texto);
                         text-decoration: none;
                         font-weight: 700;
                         font-size: 15px;
                         transition: all 0.2s ease;
+                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
                     }
                     .menu-item-link:hover {
-                        border-color: var(--verde-500);
-                        background: var(--verde-100);
-                        color: var(--verde-900);
+                        border-color: var(--cor-primaria);
+                        background: var(--cor-primaria-clara);
+                        color: var(--cor-primaria);
                         transform: translateY(-2px);
-                        box-shadow: 0 6px 20px rgba(18, 58, 49, 0.08);
+                        box-shadow: 0 6px 18px rgba(23, 109, 73, 0.12);
                     }
                 </style>
 
                 <ul class="menu-lista">
                     <li>
                         <h:link outcome="adm/alocacao.xhtml" styleClass="menu-item-link">
-                            <span>📌 Realizar Alocação Acadêmica</span>
-                            <span style="color: var(--texto-suave);">→</span>
+                            <span>📌 Gerenciamento de Alocações</span>
+                            <span style="color: var(--cor-texto-claro);">→</span>
                         </h:link>
                     </li>
                     <li>
                         <h:link outcome="adm/cadastrar-usuario.xhtml" styleClass="menu-item-link">
-                            <span>👤 Cadastrar Novo Usuário (Aluno/Professor)</span>
-                            <span style="color: var(--texto-suave);">→</span>
+                            <span>👤 Gerenciamento de Usuários (Alunos / Professores)</span>
+                            <span style="color: var(--cor-texto-claro);">→</span>
                         </h:link>
                     </li>
                     <li>
                         <h:link outcome="adm/cadastrar-sala.xhtml" styleClass="menu-item-link">
-                            <span>🏫 Cadastrar Nova Sala</span>
-                            <span style="color: var(--texto-suave);">→</span>
+                            <span>🏫 Gerenciamento de Salas</span>
+                            <span style="color: var(--cor-texto-claro);">→</span>
                         </h:link>
                     </li>
                     <li>
                         <h:link outcome="adm/cadastrar-disciplina.xhtml" styleClass="menu-item-link">
-                            <span>📚 Cadastrar Nova Disciplina</span>
-                            <span style="color: var(--texto-suave);">→</span>
-                        </h:link>
-                    </li>
-                    <li>
-                        <h:link outcome="adm/delete.xhtml" styleClass="menu-item-link">
-                            <span>⚙️ Gerenciar e Excluir Registros</span>
-                            <span style="color: var(--texto-suave);">→</span>
+                            <span>📚 Gerenciamento de Disciplinas</span>
+                            <span style="color: var(--cor-texto-claro);">→</span>
                         </h:link>
                     </li>
                 </ul>

@@ -1,5 +1,7 @@
 package com.Sistema_SLA.demo.service;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,18 +70,29 @@ public class CadastroService {
         alocacaoDao.inserir(alocacao);
     }
 
-    // Exclui um usuário do banco de dados com base no ID fornecido
+    // Exclui um usuário do banco de dados com base no ID fornecido, 
+    // impedindo exclusão se ele estiver vinculado a alguma alocação
     public void excluirUsuario(Long id) {
+        if (alocacaoDao.existeAlocacaoPorUsuario(id)) {
+            throw new RuntimeException("Não é possível excluir este usuário pois ele possui alocações ativas no sistema!");
+        }
         usuarioDao.deletar(id);
     }
 
     // Exclui uma sala do banco de dados com base no ID fornecido
     public void excluirSala(Long id) {
+        if(alocacaoDao.existeAlocacaoPorSala(id)){
+            throw new RuntimeException("Não é possível excluir esta sala pois ela possui alocações ativas no sistema!");
+        }
         salaDao.deletar(id);
     }
 
     // Exclui uma disciplina do banco de dados com base no ID fornecido
     public void excluirDisciplina(Long id) {
+        if(alocacaoDao.existeAlocacaoPorDisciplina(id)){
+            throw new RuntimeException("Não é possível excluir esta disciplina pois ela possui alocações ativas no sistema!");
+        }
+
         disciplinaDao.deletar(id);
     }
 
