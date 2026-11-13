@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:ui="jakarta.faces.facelets">
+
+    <h:panelGroup id="sidebar"
+                  layout="block"
+                  styleClass="#{sidebarBean.recolhida ? 'sidebar recolhida' : 'sidebar'}">
+
+        <!-- Botão toggle — sem JavaScript, usa JSF + Ajax -->
+        <div class="sidebar-toggle">
+            <h:form id="formToggle">
+                <h:commandButton value="&#9776;"
+                                 styleClass="sidebar-toggle-btn"
+                                 action="#{sidebarBean.toggle}"
+                                 title="#{sidebarBean.recolhida ? 'Expandir menu' : 'Recolher menu'}">
+                    <f:ajax execute="@this" render=":sidebar" />
+                </h:commandButton>
+            </h:form>
+        </div>
+
+        <div class="sidebar-titulo">
+            <span>Módulos de Gestão</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <h:link outcome="/adm/alocacao.xhtml" styleClass="sidebar-link" title="Alocações">
+                <span class="sidebar-icone">📌</span>
+                <span class="sidebar-texto">Alocações</span>
+            </h:link>
+
+            <h:link outcome="/adm/cadastrar-usuario.xhtml" styleClass="sidebar-link" title="Usuários">
+                <span class="sidebar-icone">👤</span>
+                <span class="sidebar-texto">Usuários</span>
+            </h:link>
+
+            <h:link outcome="/adm/cadastrar-sala.xhtml" styleClass="sidebar-link" title="Salas">
+                <span class="sidebar-icone">🏫</span>
+                <span class="sidebar-texto">Salas</span>
+            </h:link>
+
+            <h:link outcome="/adm/cadastrar-disciplina.xhtml" styleClass="sidebar-link" title="Disciplinas">
+                <span class="sidebar-icone">📚</span>
+                <span class="sidebar-texto">Disciplinas</span>
+            </h:link>
+        </nav>
+
+    </h:panelGroup>
+
+</ui:composition>

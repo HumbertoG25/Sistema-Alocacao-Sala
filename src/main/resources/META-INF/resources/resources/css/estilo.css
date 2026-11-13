@@ -1124,4 +1124,200 @@ body.pagina-painel {
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
+
+    /* Sidebar responsiva */
+    .layout-admin {
+        flex-direction: column;
+        overflow: visible;
+    }
+
+    .sidebar {
+        width: 100% !important;
+        height: auto;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 0.5rem;
+        overflow: hidden;
+    }
+
+    .sidebar-toggle {
+        padding: 0.3rem;
+    }
+
+    .sidebar-titulo {
+        display: none;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        gap: 8px;
+        padding: 0 0.4rem;
+    }
+
+    .sidebar-texto {
+        opacity: 1 !important;
+        width: auto !important;
+    }
+
+    .sidebar-link {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+
+    .conteudo-principal {
+        height: auto;
+        overflow-y: visible;
+    }
+}
+
+/* ================================================================
+   SIDEBAR LAYOUT
+   ================================================================ */
+
+body.pagina-painel {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;          /* ocupa exatamente a tela */
+    overflow: hidden;       /* evita scroll no body */
+    background-color: var(--cor-fundo);
+}
+
+.layout-admin {
+    display: flex;
+    flex: 1;
+    overflow: hidden;       /* cada filho controla seu próprio scroll */
+}
+
+/* ---- Sidebar ---- */
+.sidebar {
+    width: 260px;
+    height: 100%;           /* preenche o layout-admin, não a página inteira */
+    background: linear-gradient(180deg, var(--cor-primaria) 0%, var(--cor-primaria-escura) 100%);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0;
+    flex-shrink: 0;
+    overflow-y: auto;       /* scroll interno se necessário */
+    overflow-x: hidden;
+    transition: width 0.28s ease;   /* animação do recolhimento */
+}
+
+/* Estado: sidebar recolhida */
+.sidebar.recolhida {
+    width: 64px;
+    padding: 1.5rem 0;
+}
+
+/* Botão toggle (☰) no topo da sidebar */
+.sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 1rem 1rem;
+    margin-bottom: 0.4rem;
+}
+
+.sidebar-toggle-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.sidebar-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+/* Título da seção (some quando recolhida) */
+.sidebar-titulo {
+    padding: 0 1.2rem 1rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.2s ease;
+}
+
+.sidebar.recolhida .sidebar-titulo {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Nav */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 0.8rem;
+    flex: 1;
+}
+
+.sidebar.recolhida .sidebar-nav {
+    padding: 0 0.4rem;
+}
+
+/* Links */
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.82);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: var(--cor-branco);
+}
+
+.sidebar-icone {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+/* Texto some quando recolhida */
+.sidebar-texto {
+    flex: 1;
+    transition: opacity 0.15s ease;
+}
+
+.sidebar.recolhida .sidebar-texto {
+    opacity: 0;
+    width: 0;
+}
+
+/* Tooltip nos ícones quando recolhida */
+.sidebar.recolhida .sidebar-link {
+    justify-content: center;
+    padding: 11px;
+    gap: 0;
+}
+
+/* ---- Conteúdo principal ---- */
+.conteudo-principal {
+    flex: 1;
+    padding: 2rem;
+    background-color: var(--cor-fundo);
+    overflow-y: auto;       /* APENAS o conteúdo rola, a sidebar fica parada */
+    height: 100%;
 }

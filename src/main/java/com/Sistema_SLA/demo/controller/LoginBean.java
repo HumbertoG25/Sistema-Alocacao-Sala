@@ -53,7 +53,7 @@ public class LoginBean implements Serializable {
         senha = null;
 
         if (isAdm()) {
-            return "/menu.xhtml?faces-redirect=true";
+            return "/adm/alocacao.xhtml?faces-redirect=true";
         }
         if (isProfessor()) {
             return "/professor/painel-professor.xhtml?faces-redirect=true";
