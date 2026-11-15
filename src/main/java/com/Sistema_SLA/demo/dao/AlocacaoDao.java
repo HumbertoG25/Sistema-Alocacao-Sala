@@ -144,14 +144,22 @@ public class AlocacaoDao {
         //obs 'perfilId == null' é a blindagem para o código não quebrar caso o banco retorne um valor nulo para aquele usuário
         // enquanto 'perfilId != 2' É a regra de negócio principal
 
-        // comando SQL para verificar se já existe uma alocação para a mesma sala ou usuário no mesmo dia e horário
+        // Comando SQL que procura alocações conflitantes no mesmo dia e horário.
+        // Existe conflito em dois casos:
+        //   1) (a.sala_id = ? AND u.perfil_id = 2)
+        //      -> já existe OUTRO PROFESSOR nesta sala neste dia/horário, Alunos alocados na sala NÃO contam
+        //   2) (a.usuario_id = ?)
+        //      -> este MESMO PROFESSOR já está alocado em alguma sala neste dia/horário
         String sql = """
-            SELECT COUNT(*) FROM alocacoes 
-            WHERE dia_semana = ? AND horario = ? 
-            AND (sala_id = ? OR usuario_id = ?)
+            SELECT COUNT(*) FROM alocacoes a
+            JOIN usuarios u ON u.id = a.usuario_id
+            WHERE a.dia_semana = ? AND a.horario = ?
+            AND ((a.sala_id = ? AND u.perfil_id = 2) OR a.usuario_id = ?)
         """;
         
-        // Executa a consulta SQL para verificar a existência de alocações conflitantes
+        // Executa a consulta passando os parâmetros na mesma ordem dos '?' do SQL:
+        // diaSemana, horario, salaId, usuarioId.
+        // Se o COUNT for maior que zero, existe pelo menos uma alocação conflitante.
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, diaSemana, horario, salaId, usuarioId);
         return count != null && count > 0;
     }

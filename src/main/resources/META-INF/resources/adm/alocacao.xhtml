@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="estilo.css"/>
     </h:head>
-    <h:body styleClass="pagina-painel">
+    <h:body styleClass="pagina-painel pagina-admin">
         <header class="topo">
             <div class="container topo-conteudo">
                 <div class="marca">
@@ -52,7 +52,7 @@
                 </div>
 
                 <h:form id="formAlocacao" styleClass="formulario">
-                    <h:messages globalOnly="true" infoClass="mensagem-sucesso" errorClass="mensagem-erro" styleClass="mensagem-painel"/>
+                    <h:messages globalOnly="true" showSummary="true" showDetail="true" infoClass="mensagem-sucesso" errorClass="mensagem-erro" styleClass="mensagem-painel"/>
 
                     <div class="campo">
                         <h:outputLabel for="usuario" value="Usuário (Aluno / Professor):" />

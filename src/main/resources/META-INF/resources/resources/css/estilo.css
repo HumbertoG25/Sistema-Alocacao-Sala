@@ -1174,7 +1174,9 @@ body.pagina-painel {
    SIDEBAR LAYOUT
    ================================================================ */
 
-body.pagina-painel {
+/* Só as páginas de admin (com sidebar) travam o scroll do body.
+   Os painéis de aluno/professor continuam rolando normalmente. */
+body.pagina-admin {
     display: flex;
     flex-direction: column;
     height: 100vh;          /* ocupa exatamente a tela */
@@ -1320,4 +1322,13 @@ body.pagina-painel {
     background-color: var(--cor-fundo);
     overflow-y: auto;       /* APENAS o conteúdo rola, a sidebar fica parada */
     height: 100%;
+}
+
+
+/* No celular a sidebar fica horizontal: a página inteira volta a rolar */
+@media (max-width: 768px) {
+    body.pagina-admin {
+        height: auto;
+        overflow: visible;
+    }
 }

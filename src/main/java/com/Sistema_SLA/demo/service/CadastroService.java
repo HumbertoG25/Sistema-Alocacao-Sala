@@ -62,9 +62,9 @@ public class CadastroService {
             alocacao.getHorario()
         );
 
-        // Se houver um conflito, lança uma exceção informando que a sala já está ocupada neste dia e horário
+        // Se houver conflito, lança uma exceção que será exibida na tela pelo AlocacaoBean.
         if (conflito) {
-            throw new RuntimeException("Conflito de horário: Esta sala já está ocupada neste dia e horário!");
+            throw new RuntimeException("Conflito de horário: já existe um professor nesta sala ou este professor já está alocado neste dia e horário!");
         }
         // Insere a nova alocação no banco de dados
         alocacaoDao.inserir(alocacao);
