@@ -1,0 +1,10 @@
+# Arquivos que NÃO devem ser enviados para o build do Docker
+target/
+.git/
+.vscode/
+.idea/
+.m2-cache/
+*.iml
+*.sql
+README.md
+HELP.md
