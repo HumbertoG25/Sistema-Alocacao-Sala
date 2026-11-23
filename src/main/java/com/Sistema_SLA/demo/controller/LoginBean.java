@@ -5,6 +5,8 @@ import com.Sistema_SLA.demo.service.AutenticacaoService;
 import com.Sistema_SLA.demo.service.BancoDadosException;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -13,6 +15,8 @@ import java.io.Serializable;
 @Component("loginBean")
 @SessionScope
 public class LoginBean implements Serializable {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginBean.class);
 
     // Service responsável por autenticar usuários no sistema
     private final AutenticacaoService autenticacaoService;
@@ -36,6 +40,7 @@ public class LoginBean implements Serializable {
                         return null;
                     });
         } catch (BancoDadosException e) {
+            log.error("Erro ao consultar banco de dados no login: {}", e.getCause() != null ? e.getCause().getMessage() : e.getMessage(), e);
             adicionarErro("Banco de dados indisponível", "Tente novamente em alguns instantes.");
             return null;
         }

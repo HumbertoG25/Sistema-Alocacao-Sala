@@ -2,7 +2,8 @@ INSERT INTO perfis (nome) VALUES ('ALUNO'), ('PROFESSOR');
 
 INSERT INTO usuarios (nome, email, senha, perfil_id) VALUES
 ('Carlos Aluno', 'carlos@uniceplac.edu.br', '123456', 1),
-('Prof. Roberto', 'roberto@uniceplac.edu.br', '123456', 2);
+('Prof. Roberto', 'roberto@uniceplac.edu.br', '123456', 2)
+ON CONFLICT (email) DO NOTHING;
 
 INSERT INTO salas (nome, bloco, tipo) VALUES
 ('Sala 101', 'Bloco A', 'Teórica'),

@@ -1,13 +1,15 @@
-create database SistemaSLA;
-use sistemasla;
+-- 1. Crie o banco "sistemasla" (no pgAdmin ou psql) e conecte-se nele antes de rodar o restante.
+-- Exemplo no psql:
+-- CREATE DATABASE sistemasla;
+-- \c sistemasla
 
 CREATE TABLE perfis (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nome VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     senha VARCHAR(100) NOT NULL,
@@ -16,19 +18,19 @@ CREATE TABLE usuarios (
 );
 
 CREATE TABLE salas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     bloco VARCHAR(20) NOT NULL,
     tipo VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE disciplinas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE alocacoes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     usuario_id INT,
     disciplina_id INT,
     sala_id INT,
@@ -38,8 +40,6 @@ CREATE TABLE alocacoes (
     CONSTRAINT fk_disciplina FOREIGN KEY (disciplina_id) REFERENCES disciplinas(id),
     CONSTRAINT fk_sala FOREIGN KEY (sala_id) REFERENCES salas(id)
 );
-
-select * from perfis;
 
 INSERT INTO perfis (nome) VALUES ('ALUNO'), ('PROFESSOR'), ('ADM');
 
@@ -59,11 +59,7 @@ INSERT INTO disciplinas (nome) VALUES
 ('Banco de Dados Relacional');
 
 INSERT INTO alocacoes (usuario_id, disciplina_id, sala_id, horario, dia_semana) VALUES 
-
 (1, 1, 1, '19:00 - 22:30', 'Segunda-feira'),
-
 (3, 1, 1, '19:00 - 22:30', 'Segunda-feira'),
-
 (4, 2, 2, '19:00 - 22:30', 'Terça-feira'),
-
 (2, 2, 2, '19:00 - 22:30', 'Terça-feira');

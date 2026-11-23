@@ -1,10 +1,10 @@
 CREATE TABLE perfis (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nome VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     senha VARCHAR(100) NOT NULL,
@@ -13,19 +13,19 @@ CREATE TABLE usuarios (
 );
 
 CREATE TABLE salas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     bloco VARCHAR(20) NOT NULL,
     tipo VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE disciplinas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE alocacoes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     usuario_id INT,
     disciplina_id INT,
     sala_id INT,
