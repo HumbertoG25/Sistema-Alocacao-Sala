@@ -1,4 +1,3 @@
-# Arquivos que NÃO devem ser enviados para o build do Docker
 target/
 .git/
 .vscode/
