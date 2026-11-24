@@ -170,3 +170,13 @@ Você também pode acessar o sistema diretamente pela versão publicada no Rende
 - **Link de acesso:** https://sistema-alocacao-sala.onrender.com/login.xhtml
 
 > *Nota: Como o serviço utiliza o plano gratuito do Render, o primeiro acesso após um período de inatividade pode levar alguns segundos até a aplicação acordar.*
+
+### 🔑 Usuários de Teste
+
+| Perfil | Nome | E-mail | Senha |
+|---|---|---|---|
+| **Administrador (`ADM`)** | Admin | `adm@uniceplac.edu.br` | `123456` |
+| **Professor (`PROFESSOR`)** | Prof. Roberto | `roberto@uniceplac.edu.br` | `123456` |
+| **Professor (`PROFESSOR`)** | Professora Ana | `ana@uniceplac.edu.br` | `123456` |
+| **Aluno (`ALUNO`)** | Carlos Aluno | `carlos@uniceplac.edu.br` | `123456` |
+| **Aluno (`ALUNO`)** | Mariana Aluna | `mariana@uniceplac.edu.br` | `123456` |
