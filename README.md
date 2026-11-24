@@ -160,3 +160,13 @@ http://localhost:8080/login.xhtml
 - **Administrador (`ADM`):** Redirecionado para `/adm/alocacao.xhtml` com acesso ao menu lateral para gestão de usuários, salas, disciplinas e alocações.
 - **Professor (`PROFESSOR`):** Redirecionado para `/professor/painel-professor.xhtml`.
 - **Aluno (`ALUNO`):** Redirecionado para `/aluno/painel-aluno.xhtml`.
+
+---
+
+## ☁️ Acesso Online (Deploy no Render)
+
+Você também pode acessar o sistema diretamente pela versão publicada no Render:
+
+- **Link de acesso:** https://sistema-alocacao-sala.onrender.com/login.xhtml
+
+> *Nota: Como o serviço utiliza o plano gratuito do Render, o primeiro acesso após um período de inatividade pode levar alguns segundos até a aplicação acordar.*
